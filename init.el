@@ -127,7 +127,7 @@
   (global-hl-line-mode t)
 
   (set-face-attribute 'default nil
-											:family "FiraMono Nerd Font"
+											:family "Source Code Pro Regular"
 											;; :height 100
 											;; :weight 'normal
 											;; :width 'normal
@@ -244,7 +244,9 @@
   :bind
   ("H-d" . dired)
   (dired-mode-map
-   ("K" . dired-kill-subdir)))
+   ("K" . dired-kill-subdir)
+	 ("H-n" . dired-next-subdir)
+	 ("H-p . dired-prev-subdir")))
 
 ;; (leaf dired-subtree
 ;; 	:straight t

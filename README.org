@@ -6,34 +6,21 @@ Emacs for scientists.
 
 Orbmacs is an emacs configuration focused on org mode and "living in Emacs", and gives me a highly streamlined workflow. It makes use of vertico, consult, and modal editing through meow.el. Key to Orbmacs is remaining lightweight and "close to Emacs", without compromising functionality.
 
-Unfortunately there are presently no orbs in orbmacs aside from the dashboard image, but I am looking into ways to resolve this issue. There is however an alternate orb-themed dashboard image in the media folder.
-
 Packages are managed using [[https://github.com/conao3/leaf.el][leaf]] and [[https://github.com/radian-software/straight.el][straight.el]].
 
 I would encourage forking this repository if you are interested in using it as a base for your own customizations, but ideally you should build your own configuration from scratch and simply pick out any parts you like.
 
 In the future I intend to add more features for python programming, specifically with numpy, and tweaks to org mode and dired.
 
-If you have any questions or suggestions please feel free to contact me, and I will do my best to respond promptly. A fair warning that I am a mechanical engineer and not a programmer by trade.
-
-** Installation
-Run in a terminal
-#+begin_src
-git clone https://github.com/kvvba/orbmacs.git ~/.emacs.d
-#+end_src
-Either restart Emacs at this point or simply use =M-x load-file=, and point it to =~/.emacs.d/init.el=
-
-** Hints
-
-To view a range of help options, key in =C-h ?= or simply =M-x help=. Alternatively you can key =C-h= and wait a moment, and the package which-key will display a list of valid completions for different help options. =C-h f= (describe-function) and =C-h v= (describe-variable) are particularly helpful.
+If you have any questions or suggestions please feel free to contact me, and I will do my best to respond promptly. A fair warning that I am an engineer and not a programmer by trade.
 
 ** Notes
 
-Note I have bound the "hyper" key to make some of my keybinds more comfortable. If you wish to use the same keybinds you will have to bind it yourself (e.g. to capslock).
+Note I have bound the "hyper" key to make some of my keybinds more comfortable. If you wish to use the same keybinds you will have to bind it yourself (e.g. to capslock) using xmodmap.
 
 I'm currently using the "getting things done" (GTD) method of organisation. If you do not like GTD, remove the parts relating to it in: agenda files, refile targets, and capture templates.
 
-I'm using the "FiraMono" font available from NerdFonts. If you do not have this font or do not wish to use it, please change it to something else or comment out the setting to use the default.
+I'm using the "Source Code Pro" font. If you do not have this font or do not wish to use it, please change it to something else or comment out the setting to use the default.
 
 I'm using leaf to manage my Emacs packages. If you prefer use-package, it's very quick and easy to change it over.
 

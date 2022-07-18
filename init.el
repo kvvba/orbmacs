@@ -44,6 +44,9 @@
   :blackout (emacs-lisp-mode . "λ")
   :blackout abbrev-mode
   :init
+	(setq inhibit-startup-screen t)
+	(bookmark-bmenu-list)
+	(switch-to-buffer "*Bookmark List*")
   ;; Make emacs start faster
   (setq startup/gc-cons-threshold gc-cons-threshold)
   (setq gc-cons-threshold most-positive-fixnum)
@@ -128,9 +131,9 @@
 
   (set-face-attribute 'default nil
 											:family "Source Code Pro Regular"
-											;; :height 100
-											;; :weight 'normal
-											;; :width 'normal
+											:height 110
+											:weight 'normal
+											:width 'normal
 											)
 
   (defun concat-string-list (list)
@@ -516,17 +519,17 @@
   :config (setq slime-company-completion 'fuzzy
                 slime-company-after-completion 'slime-company-just-one-space))
 
-(leaf all-the-icons
-  :straight t
-	:blackout all-the-icons-dired-mode
-  :if (display-graphic-p))
+;; (leaf all-the-icons
+;;   :straight t
+;; 	:blackout all-the-icons-dired-mode
+;;   :if (display-graphic-p))
 
-(leaf all-the-icons-dired
-  :straight t
-  :if (display-graphic-p)
-  :leaf-defer t
-  :commands all-the-icons-dired-mode
-  :hook (dired-mode-hook . all-the-icons-dired-mode))
+;; (leaf all-the-icons-dired
+;;   :straight t
+;;   :if (display-graphic-p)
+;;   :leaf-defer t
+;;   :commands all-the-icons-dired-mode
+;;   :hook (dired-mode-hook . all-the-icons-dired-mode))
 
 (leaf eglot
   :straight t
@@ -747,15 +750,20 @@
 ;;    (setq-default mode-line-format (list "%_"))
 ;;    (setq mode-line-format (list "%_"))))
 
+;; (leaf leaf
+;;   :straight (lambda-themes :type git :host github :repo "lambda-emacs/lambda-themes")
+;;   :custom
+;;   (lambda-themes-set-italic-comments . t)
+;;   (lambda-themes-set-italic-keywords . t)
+;;   (lambda-themes-set-variable-pitch . t)
+;;   :config
+;;   (setq custom-safe-themes t)
+;;   (load-theme 'lambda-light-faded))
+
 (leaf leaf
-  :straight (lambda-themes :type git :host github :repo "lambda-emacs/lambda-themes")
-  :custom
-  (lambda-themes-set-italic-comments . t)
-  (lambda-themes-set-italic-keywords . t)
-  (lambda-themes-set-variable-pitch . t)
-  :config
-  (setq custom-safe-themes t)
-  (load-theme 'lambda-light-faded))
+	:config
+	(setq custom-safe-themes t)
+	(load-theme 'modus-operandi))
 
 ;; (leaf nix-mode
 ;;   :mode "\\.nix\\'")
@@ -765,33 +773,5 @@
   :blackout t
   :init (global-flycheck-mode))
 
-(leaf dashboard
-  :straight t
-  :leaf-defer nil
-  :preface
-  (defun create-scratch-buffer ()
-		"Create a scratch buffer"
-		(interactive)
-		(switch-to-buffer (get-buffer-create "*scratch*"))
-		(lisp-interaction-mode))
-  :config
-  (dashboard-setup-startup-hook)
-  (setq inhibit-startup-message t)
-  (setq dashboard-items '((recents . 9)
-													(bookmarks . 15)))
-  ;; (add-to-list 'dashboard-items '(agenda) t)
-  ;; (setq dashboard-week-agenda t)
-  (setq dashboard-banner-logo-title "Welcome to Orbmacs.")
-  ;; (setq dashboard-startup-banner "~/.emacs.d/media/orb.png")
-  (setq dashboard-startup-banner "~/.emacs.d/media/sicp.png")
-  ;; (setq dash-board-startup-banner 'official)
-  (setq dashboard-center-content t)
-  ;; (setq dashboard-set-heading-icons t)
-  ;; (setq dashboard-set-file-icons t)
-  ;; (setq dashboard-show-shortcuts nil)
-  (setq dashboard-set-footer nil)
-  (setq dashboard-set-init-info t)
-  (setq dashboard-init-info (format "Emacs loaded in %s"
-																		(emacs-init-time))))
 (provide 'emacs)
 ;;; emacs.el ends here

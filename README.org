@@ -1,5 +1,6 @@
 #+title: Orbmacs
-Emacs for scientists.
+
+Emacs for note taking.
 
 [[./media/sicp.png]]
 ** Introduction

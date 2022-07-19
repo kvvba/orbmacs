@@ -209,41 +209,7 @@
 
 (leaf dired
   :defer-config
-  (defun kill-dired-buffers ()
-		(interactive)
-		(mapc (lambda (buffer)
-						(when (eq 'dired-mode (buffer-local-value 'major-mode buffer))
-							(kill-buffer buffer)))
-					(buffer-list)))
-
-  (eval-after-load "dired-aux"
-		'(add-to-list 'dired-compress-file-suffixes
-									'("\\.zip\\'" ".zip" "unzip")))
-  (eval-after-load "dired"
-		'(define-key dired-mode-map "z" 'dired-zip-files))
-
-  (defun dired-zip-files (zip-file)
-		"Create an archive containing the marked files."
-		(interactive "sEnter name of zip file: ")
-		;; create the zip file
-		(let ((zip-file (if (string-match ".zip$" zip-file) zip-file (concat zip-file ".zip"))))
-			(shell-command
-			 (concat "zip "
-							 zip-file
-							 " "
-							 (concat-string-list
-								(mapcar
-								 '(lambda (filename)
-										(file-name-nondirectory filename))
-								 (dired-get-marked-files))))))
-
-		(revert-buffer)
-
-		;; remove the mark on all the files  "*" to " "
-		;; (dired-change-marks 42 ?\040)
-		;; mark zip file
-		;; (dired-mark-files-regexp (filename-to-regexp zip-file))
-		)
+	(load-file "~/.emacs.d/dired-config.el")
   :bind
   ("H-d" . dired)
   (dired-mode-map
@@ -251,16 +217,21 @@
 	 ("H-n" . dired-next-subdir)
 	 ("H-p . dired-prev-subdir")))
 
-;; (leaf dired-subtree
-;; 	:straight t
-;; 	:after dired)
-
 (leaf dired-narrow
   :straight t
   :after dired
   :bind ((dired-mode-map
 					:package dired
 					("/" . dired-narrow))))
+
+(leaf dirvish
+	:straight t
+	:after dired
+	:init
+	(dirvish-override-dired-mode)
+	:bind
+	(dired-mode-map
+	 ("s" . dirvish-quicksort)))
 
 (leaf meow
   :straight t
@@ -277,61 +248,7 @@
 (leaf org
   :straight t
   :config
-  ;; (setq sentence-end-double-space nil)
-  (setq org-pretty-entities t)
-  
-  (defun org-capture-mail ()
-		(interactive)
-		(call-interactively 'org-store-link)
-		(org-capture nil "@"))
-  
-  (setq org-capture-templates '(("i" "Inbox" entry
-																 (file+headline "~/org/gtd/inbox.org" "Work")
-																 "* TODO %i%?\nEntered on: %U")
-																("p" "Personal inbox" entry
-																 (file+headline "~/org/gtd/inbox.org" "Personal")
-																 "* TODO %i%?\nEntered on: %U")
-																("@" "Inbox [mu4e]" entry
-																 (file+headline "~/org/gtd/inbox.org" "Mail")
-																 "* TODO Process \"%a\" %?\nEntered on: %U")
-																("r" "Reminder" entry
-																 (file+headline "~/org/gtd/reminders.org" "Reminders")
-																 "* TODO %i%?\nEntered on: %U")
-																;; ("m" "Meeting minutes" entry
-																;;  (file+headline "~/org/meetings.org" "Meeting notes")
-																;;  "* Meeting title: %(read-string \"Meeting title: \")\nAttending: %(read-string \"Attendees: \")\nTime: %U\n\n%i%?")
-																))
-  
-  (setq org-agenda-files '("~/org/gtd/inbox.org"
-													 ;; "~/org/gtd/corkboard.org"
-													 "~/org/gtd/reminders.org"
-													 "~/org/timetable.org"))
-  ;; (setq recentf-exclude '("\\.org\\"))
-  (setq org-todo-keywords
-				'((sequence "TODO" "WAIT" "|" "DONE" "CANC" )))
-  (setq org-clock-sound "~/.emacs.d/media/digital_alarm.wav")
-
-  (defun org-summary-todo (n-done n-not-done)
-		(let (org-log-done org-log-states)   ; turn off logging
-			(org-todo (if (= n-not-done 0) "DONE" "TODO"))))
-
-  (setq org-refile-targets '(("~/org/gtd/reminders.org" :maxlevel . 2)
-														 ("~/org/gtd/someday.org" :level . 1)
-														 ("~/org/gtd/corkboard.org" :maxlevel . 3)))
-  (add-to-list 'org-entities-user
-							 '("oint","\\oint{}" t "&#8750" "..." "..." "∮"))
-  (with-eval-after-load 'ox-latex
-		(add-to-list 'org-latex-classes
-								 '("elsarticle"
-									 "\\documentclass{elsarticle}
- [NO-DEFAULT-PACKAGES]
- [PACKAGES]
- [EXTRA]"
-									 ("\\section{%s}" . "\\section*{%s}")
-									 ("\\subsection{%s}" . "\\subsection*{%s}")
-									 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-									 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-									 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+	(load-file "~/.emacs.d/org-config.el")
   :blackout ((org-indent-mode)
 						 (flyspell-mode)
 						 (visual-line-mode))
@@ -573,22 +490,23 @@
   (setq denote-dired-directories
 				(list denote-directory))
   :config
-  (with-eval-after-load 'org-capture
-		(require 'denote-org-capture)
-		(add-to-list 'org-capture-templates
-								 '("n" "New note" plain
-                   (file denote-last-path)
-                   #'denote-org-capture
-                   :no-save t
-                   :immediate-finish nil
-                   :kill-buffer t
-                   :jump-to-captured t)))
-  (defun my-denote-journal ()
-		"Create an entry tagged 'journal' with the date as its title."
-		(interactive)
-		(denote
-		 (format-time-string "%A %e %B %Y") ; format like Tuesday 14 June 2022
-		 "journal")) ; multiple keywords are a list of strings: '("one" "two")
+	(with-eval-after-load 'org-capture
+	(require 'denote-org-capture)
+	(add-to-list 'org-capture-templates
+							 '("n" "New note" plain
+                 (file denote-last-path)
+                 #'denote-org-capture
+                 :no-save t
+                 :immediate-finish nil
+                 :kill-buffer t
+                 :jump-to-captured t)))
+
+(defun my-denote-journal ()
+	"Create an entry tagged 'journal' with the date as its title."
+	(interactive)
+	(denote
+	 (format-time-string "%A %e %B %Y") ; format like Tuesday 14 June 2022
+	 "journal")) ; multiple keywords are a list of strings: '("one" "two")
   :hook
   (dired-mode-hook . denote-dired-mode-in-directories)
   ;; (find-file-hook . denote-link-buttonize-buffer)
@@ -750,20 +668,20 @@
 ;;    (setq-default mode-line-format (list "%_"))
 ;;    (setq mode-line-format (list "%_"))))
 
-;; (leaf leaf
-;;   :straight (lambda-themes :type git :host github :repo "lambda-emacs/lambda-themes")
-;;   :custom
-;;   (lambda-themes-set-italic-comments . t)
-;;   (lambda-themes-set-italic-keywords . t)
-;;   (lambda-themes-set-variable-pitch . t)
-;;   :config
-;;   (setq custom-safe-themes t)
-;;   (load-theme 'lambda-light-faded))
-
 (leaf leaf
-	:config
-	(setq custom-safe-themes t)
-	(load-theme 'modus-operandi))
+  :straight (lambda-themes :type git :host github :repo "kvvba/lambda-themes")
+  :custom
+  (lambda-themes-set-italic-comments . t)
+  (lambda-themes-set-italic-keywords . t)
+  (lambda-themes-set-variable-pitch . t)
+  :config
+  (setq custom-safe-themes t)
+  (load-theme 'lambda-light-faded))
+
+;; (leaf leaf
+;; 	:config
+;; 	(setq custom-safe-themes t)
+;; 	(load-theme 'modus-operandi))
 
 ;; (leaf nix-mode
 ;;   :mode "\\.nix\\'")

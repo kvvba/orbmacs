@@ -1,4 +1,5 @@
 (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
+
 (setq eshell-prompt-function
 			(lambda nil
 				(concat
@@ -36,6 +37,3 @@
 				(other-window 1)
 				(eshell))
 		(switch-to-buffer-other-window "*eshell*")))
-
-(provide 'eshell)
-;;; eshell.el ends here

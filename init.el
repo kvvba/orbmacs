@@ -35,7 +35,7 @@
   (straight-use-package 'leaf)
   (straight-use-package 'leaf-keywords)
   (straight-use-package 'blackout)
-	(straight-use-package 'hydra)
+	;; (straight-use-package 'hydra)
   (leaf-keywords-init))
 
 (leaf emacs
@@ -43,8 +43,8 @@
   :blackout (emacs-lisp-mode . "λ")
   :blackout abbrev-mode
   :init
-	;; (setq inhibit-startup-screen t)
-	;; (bookmark-bmenu-list)
+	(setq inhibit-startup-screen t)
+	;; (list-bookmarks)
 	;; (switch-to-buffer "*Bookmark List*")
 	
   ;; Make emacs start faster
@@ -98,11 +98,11 @@
 															(?\" . ?\")
 															))
   (electric-pair-mode t)
-  (setq insert-pair-alist '((40 41) (91 93) (123 125) (34 34) (39 39) (96 39)))
+  ;; (setq insert-pair-alist '((40 41) (91 93) (123 125) (34 34) (39 39) (96 39)))
 
 	(global-display-line-numbers-mode)
 
-	(eshell-command "xmodmap ~/.Xmodmap")
+	;; (eshell-command "xmodmap ~/.Xmodmap")
 
 	(setq custom-safe-themes t)
 	
@@ -166,31 +166,54 @@
   :hook
   (emacs-startup-hook . startup/revert-file-name-handler-alist))
 
+(leaf ispell
+	:config
+	(setq ispell-program-name "hunspell")
+	(setq ispell-dictionary "en_GB"))
+
+(leaf flypsell
+	:config
+	(setq flyspell-default-dictionary "english"))
+
 (leaf eshell
-  :leaf-defer t
   :defer-config
 	(load-file "~/.emacs.d/config/eshell.el")
   :bind
-  ("<s-C-return>" . eshell-other-window)
+  ("<C-s-return>" . eshell-other-window)
   ("C-c e" . eshell)
+	("C-c E" . eshell-command)
 	:hook
 	(eshell-mode-hook . eat-eshell-visual-command-mode)
 	(eshell-mode-hook . eat-eshell-mode))
 
-;; (leaf detached
-;; 	:straight t
-;;   :init
-;;   (detached-init)
-;;   :bind (;; Replace `async-shell-command' with `detached-shell-command'
-;;          ([remap async-shell-command] . detached-shell-command)
-;;          ;; Replace `compile' with `detached-compile'
-;;          ([remap compile] . detached-compile)
-;;          ([remap recompile] . detached-compile-recompile)
-;;          ;; Replace built in completion of sessions with `consult'
-;;          ([remap detached-open-session] . detached-consult-session)
-;; 				 )
-;;   :custom ((detached-show-output-on-attach t)
-;;            (detached-terminal-data-command system-type)))
+(leaf detached
+	:straight t
+  :init
+  (detached-init)
+  :bind (;; Replace `async-shell-command' with `detached-shell-command'
+         ([remap async-shell-command] . detached-shell-command)
+         ;; Replace `compile' with `detached-compile'
+         ([remap compile] . detached-compile)
+         ([remap recompile] . detached-compile-recompile)
+         ;; Replace built in completion of sessions with `consult'
+         ([remap detached-open-session] . detached-consult-session)
+				 )
+	:config
+	(defun detached-extra-project-compile ()
+    "Run `compile' in the project root."
+    (declare (interactive-only compile))
+    (interactive)
+    (let ((default-directory (project-root (project-current t)))
+          (compilation-buffer-name-function
+           (or project-compilation-buffer-name-function
+               compilation-buffer-name-function))
+          (detached-session-origin 'project))
+      (call-interactively #'detached-compile)))
+  (advice-add 'project-compile
+              :override #'detached-extra-project-compile)
+  :custom
+	(detached-show-output-on-attach . t)
+  (detached-terminal-data-command . system-type))
 
 (leaf dired
   :defer-config
@@ -223,12 +246,14 @@
 (leaf all-the-icons-dired
 	:straight t
 	:after dired
+	:blackout t
 	:hook
 	(dired-mode-hook . all-the-icons-dired-mode))
 
 (leaf all-the-icons-completion
 	:straight t
 	:init (all-the-icons-completion-mode)
+	:blackout t
 	:hook
 	(marginalia-mode-hook . all-the-icons-completion-marginalia-setup))
 
@@ -252,10 +277,11 @@
       'normal
     '("P" . consult-yank-pop)
     '("Q" . avy-goto-line)
-		'("M-%" . meow-query-replace)))
+		'("%" . meow-query-replace)
+		'("z" . repeat)))
 
 (leaf org
-  :straight t
+	:straight t
   :config
 	(load-file "~/.emacs.d/config/org-config.el")
   :blackout ((org-indent-mode)
@@ -265,19 +291,13 @@
   ("H-c" . org-capture)
   ("C-c a" . org-agenda)
   ("C-c b" . org-cite-insert)
-	("C-c t" . hydra-timer/body)
+	;; ("C-c t" . hydra-timer/body)
 	("C-c r" . org-refile)
   :hook
   (org-mode-hook . flyspell-mode)
   (org-mode-hook . org-indent-mode)
   (org-mode-hook . visual-line-mode)
-  (org-after-todo-statistics-hook . org-summary-todo)
-
-	:hydra ((hydra-timer
-					 "Org timer"
-					 ("s" org-timer-set-timer "Set timer")
-					 ("p" org-timer-pause-or-continue "Pause/resume timer")
-					 ("k" org-timer-stop "Stop timer"))))
+  (org-after-todo-statistics-hook . org-summary-todo))
 
 (leaf org-modern
 	:straight t
@@ -290,7 +310,7 @@
 	(setq org-modern-radio-target nil)
 	(global-org-modern-mode))
 
-(leaf leaf
+(leaf org-moden-indent
 	:straight (org-modern-indent
 						 :type git
 						 :host github
@@ -298,12 +318,16 @@
 	:hook
 	(org-indent-mode-hook . org-modern-indent-mode))
 
+(leaf pomorg
+  :straight (pomorg
+             :type git
+             :host github
+             :repo "kvvba/pomorg"))
+
 (leaf nov
 	:straight t
 	:config
-	(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
-	)
-
+	(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
 
 (leaf yaml-mode
 	:straight t
@@ -326,9 +350,7 @@
   :config
   (setq olivetti-style 'fancy)
   :bind
-  ("C-c O" . olivetti-mode)
-  :hook
-  (olivetti-mode-hook . (lambda ()(setq olivetti-body-width 0.5))))
+  ("C-c O" . olivetti-mode))
 
 (leaf page-break-lines
   :straight t
@@ -354,7 +376,7 @@
 						 :type git
 						 :host github
 						 :repo "pprevos/citar-denote")
-	:blackout citar-denote-mode
+	:blackout citar-denote
 	:hook
 	(org-mode-hook . citar-denote-mode)
 	:bind
@@ -494,7 +516,7 @@
 ;; 						 :repo "tecosaur/Org.jl"))
 
 (leaf eglot
-  :straight t
+	:straight t
   :leaf-defer
   :hook ((c-mode-hook c++-mode-hook python-mode-hook) . eglot-ensure)
   :config
@@ -502,6 +524,9 @@
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("ccls")))
   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp"))))
 
+(leaf eglot-jl
+	:straight t
+	:init (eglot-jl-init))
 
 (leaf company
   :straight t
@@ -573,7 +598,7 @@
 (leaf easy-jekyll
 	:straight t
 	:config
-	(setq easy-jekyll-basedir "~/org/kvvba.github.io/")
+	(setq easy-jekyll-basedir "~/org/blog/")
 	(setq easy-jekyll-url "https://kvvba.github.io/")
 	:bind
 	("C-c j" . easy-jekyll))
@@ -713,8 +738,19 @@
 (leaf flycheck
   :straight t
   :blackout t
-  :init (global-flycheck-mode)
-	)
+  :init (global-flycheck-mode))
+
+(leaf dashboard
+	:straight t
+	:config
+	(dashboard-setup-startup-hook)
+	(setq dashboard-startup-banner "~/.emacs.d/media/sicp.png")
+	(setq dashboard-center-content t)
+	(setq dashboard-banner-logo-title "Welcome to Orbmacs")
+	(setq dashboard-items '((recents  . 5)
+                        (bookmarks . 15)
+                        (agenda . 5)))
+	(setq dashboard-set-footer nil))
 
 (provide 'init)
 ;;; init.el ends here

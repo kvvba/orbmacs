@@ -97,9 +97,10 @@
 															(?\[ . ?\])
 															(?\" . ?\")
 															))
-  (electric-pair-mode t)
-  ;; (setq insert-pair-alist '((40 41) (91 93) (123 125) (34 34) (39 39) (96 39)))
 
+  (electric-pair-mode t)
+  (setq insert-pair-alist '((40 41) (91 93) (123 125) (34 34) (39 39) (96 39)))
+	
 	(global-display-line-numbers-mode)
 
 	;; (eshell-command "xmodmap ~/.Xmodmap")
@@ -134,7 +135,7 @@
   (global-hl-line-mode t)
 
   (set-face-attribute 'default nil
-											:family "Source Code Pro Regular"
+											:family "Source Code Pro"
 											:height 100
 											:weight 'normal
 											:width 'normal
@@ -143,16 +144,12 @@
   (defun concat-string-list (list)
 		"Return a string which is a concatenation of all elements of the list separated by spaces"
 		(mapconcat '(lambda (obj) (format "%s" obj)) list " "))
-
   (require 'cl-lib)
-
   (setq inferior-lisp-program "sbcl")
-
   (setq enable-recursive-minibuffers t)
-
 	(setq log-warning-minimum-level :error)
-
 	(setq sentence-end-double-space nil)
+	(display-time-mode)
   :bind
   ;; Hitting suspend frame by accident is annoying me
   ("C-z" . nil)
@@ -176,7 +173,7 @@
 	(setq flyspell-default-dictionary "english"))
 
 (leaf eshell
-  :defer-config
+	:config
 	(load-file "~/.emacs.d/config/eshell.el")
   :bind
   ("<C-s-return>" . eshell-other-window)
@@ -223,7 +220,8 @@
   (dired-mode-map
    ("K" . dired-kill-subdir)
 	 ("H-n" . dired-next-subdir)
-	 ("H-p" . dired-prev-subdir))
+	 ("H-p" . dired-prev-subdir)
+	 ("C-x C-j" . dired-jump))
 	:hook
 	(dired-mode-hook . dired-hide-details-mode))
 
@@ -242,6 +240,9 @@
 ;; 	:straight t
 ;; 	:after dired
 ;; 	:hook (dired-mode-hook . dired-collapse-mode))
+
+(leaf all-the-icons
+	:straight t)
 
 (leaf all-the-icons-dired
 	:straight t
@@ -277,16 +278,13 @@
       'normal
     '("P" . consult-yank-pop)
     '("Q" . avy-goto-line)
-		'("%" . meow-query-replace)
-		'("z" . repeat)))
+		'("%" . meow-query-replace)))
 
 (leaf org
 	:straight t
+	:blackout visual-line-mode
   :config
 	(load-file "~/.emacs.d/config/org-config.el")
-  :blackout ((org-indent-mode)
-						 (flyspell-mode)
-						 (visual-line-mode))
   :bind
   ("H-c" . org-capture)
   ("C-c a" . org-agenda)
@@ -294,9 +292,13 @@
 	;; ("C-c t" . hydra-timer/body)
 	("C-c r" . org-refile)
   :hook
-  (org-mode-hook . flyspell-mode)
-  (org-mode-hook . org-indent-mode)
+  (org-mode-hook . (lambda ()
+										 (flyspell-mode)
+										 (blackout 'flyspell-mode)))
   (org-mode-hook . visual-line-mode)
+  (org-mode-hook . (lambda ()
+										 (org-indent-mode)
+										 (blackout 'org-indent-mode)))
   (org-after-todo-statistics-hook . org-summary-todo))
 
 (leaf org-modern
@@ -369,9 +371,11 @@
   (citar-bibliography . org-cite-global-bibliography)
   :config
   (advice-add #'multi-occur :override #'consult-multi-occur)
-  (setq citar-at-point-function 'embark-act))
+  (setq citar-at-point-function 'embark-act)
+	:bind
+	("C-c n o" . citar-open))
 
-(leaf leaf
+(leaf citar-denote
 	:straight (citar-denote
 						 :type git
 						 :host github
@@ -380,38 +384,38 @@
 	:hook
 	(org-mode-hook . citar-denote-mode)
 	:bind
-	("C-c n c c" . citar-create-note)
+	("C-c n c n" . citar-create-note)
 	("C-c n c o" . citar-open-notes)
-	("C-c n c d" . citar-denote-dwim)
+	("C-c n c d" . citar-dwim)
 	("C-c n c a" . citar-denote-add-citekey))
 
-(leaf mu4e
-  :leaf-defer t
-  :bind
-  ("C-c z" . mu4e)
-  ("C-c Z" . mu4e-other-window)
-  (mu4e-main-mode-map
-   ("e" . kill-current-buffer))
-  (mu4e-headers-mode-map
-   ("C-c c" . org-capture-mail))
-  (mu4e-view-mode-map
-   ("C-c c" . org-capture-mail))
-  :defer-config
-  (load "~/.emacs.d/config/mail.el"))
+;; (leaf mu4e
+;;   :leaf-defer t
+;;   :bind
+;;   ("C-c z" . mu4e)
+;;   ("C-c Z" . mu4e-other-window)
+;;   (mu4e-main-mode-map
+;;    ("e" . kill-current-buffer))
+;;   (mu4e-headers-mode-map
+;;    ("C-c c" . org-capture-mail))
+;;   (mu4e-view-mode-map
+;;    ("C-c c" . org-capture-mail))
+;;   :defer-config
+;;   (load "~/.emacs.d/config/mail.el"))
 
-(leaf mu4e-alert
-  :straight t
-  :after mu4e
-  :config
-  (mu4e-alert-set-default-style 'libnotify)
-  (mu4e-alert-enable-mode-line-display)
-  (mu4e-alert-enable-notifications))
+;; (leaf mu4e-alert
+;;   :straight t
+;;   :after mu4e
+;;   :config
+;;   (mu4e-alert-set-default-style 'libnotify)
+;;   (mu4e-alert-enable-mode-line-display)
+;;   (mu4e-alert-enable-notifications))
 
-(leaf erc
-	:leaf-defer t
-	:config (load-file "~/.emacs.d/config/erc.el")
-	:bind
-	("C-c i" . erc))
+;; (leaf erc
+;; 	:leaf-defer t
+;; 	:config (load-file "~/.emacs.d/config/erc.el")
+;; 	:bind
+;; 	("C-c i" . erc))
 
 (leaf elfeed
 	:straight t
@@ -515,18 +519,26 @@
 ;; 						 :host github
 ;; 						 :repo "tecosaur/Org.jl"))
 
-(leaf eglot
-	:straight t
-  :leaf-defer
-  :hook ((c-mode-hook c++-mode-hook python-mode-hook) . eglot-ensure)
-  :config
-  (add-to-list 'exec-path (expand-file-name "~/.local/bin/"))
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("ccls")))
-  (add-to-list 'eglot-server-programs '(python-mode . ("pylsp"))))
+;; (leaf eglot
+;; 	:straight t
+;;   :leaf-defer
+;;   :hook ((c-mode-hook c++-mode-hook python-mode-hook) . eglot-ensure)
+;;   :config
+;;   (add-to-list 'exec-path (expand-file-name "~/.local/bin/"))
+;;   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("ccls")))
+;;   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp"))))
 
-(leaf eglot-jl
-	:straight t
-	:init (eglot-jl-init))
+;; (leaf markdown-mode
+;; 	:straight t)
+
+;; (leaf mmm-mode
+;; 	:straight t)
+
+;; (require 'basilisk-mode)
+
+;; (leaf eglot-jl
+;; 	:straight t
+;; 	:init (eglot-jl-init))
 
 (leaf company
   :straight t
@@ -567,6 +579,7 @@
 		 (format-time-string "%A %e %B %Y") ; format like Tuesday 14 June 2022
 		 '("journal"))) ; multiple keywords are a list of strings: '("one" "two")
 	(setq denote-backlinks-show-context t)
+	(setq denote-known-keywords nil)
   :hook
   (dired-mode-hook . denote-dired-mode-in-directories)
 	;; (denote-dired-mode-hook . dired-hide-details-mode)
@@ -579,6 +592,12 @@
   ("C-c n b" . denote-link-backlinks)
 	("C-c n n" . denote)
 	("C-c n d" . (lambda () (interactive) (dired denote-directory))))
+
+;; (leaf denote-menu
+;; 	:straight (denote-menu
+;; 						 :type git
+;; 						 :host github
+;; 						 :repo "namilus/denote-menu"))
 
 (leaf consult-notes
   :straight (consult-notes
@@ -723,22 +742,33 @@
   (lambda-themes-set-italic-keywords . t)
   (lambda-themes-set-variable-pitch . t))
 
-(leaf ef-themes
+;; (leaf ef-themes
+;; 	:straight t)
+
+;; (leaf standard-themes
+;; 	:straight t)
+
+(leaf doom-themes
 	:straight t
 	:config
-  (load-theme 'ef-light))
+	(load-theme 'doom-solarized-dark))
 
-(leaf standard-themes
-	:straight t)
-
-(leaf nix-mode
-	:straight t
-  :mode "\\.nix\\'")
+;; (leaf nix-mode
+;; 	:straight t
+;;   :mode "\\.nix\\'")
 
 (leaf flycheck
   :straight t
   :blackout t
   :init (global-flycheck-mode))
+
+;; (leaf doom-modeline
+;; 	:straight t
+;; 	:init (doom-modeline-mode 1))
+
+(leaf simple-modeline
+	:straight t
+	:init (simple-modeline-mode))
 
 (leaf dashboard
 	:straight t

@@ -1,28 +1,3 @@
 #+title: Orbmacs
 
-Emacs for note taking.
-
-[[./media/sicp.png]]
-
-** Introduction
-
-Orbmacs is an emacs configuration focused on org mode and "living in Emacs", and gives me a highly streamlined workflow. It makes use of vertico, consult, and modal editing through meow.el. Key to Orbmacs is remaining lightweight and "close to Emacs", without compromising functionality.
-
-Packages are managed using [[https://github.com/conao3/leaf.el][leaf]] and [[https://github.com/radian-software/straight.el][straight.el]].
-
-** Notes
-
-Note I have bound the "hyper" key to make some of my keybinds more comfortable. If you wish to use the same keybinds you will have to bind it yourself (e.g. to capslock) using xmodmap.
-
-I'm using leaf to manage my Emacs packages. If you prefer use-package, it's very quick and easy to change it over.
-
-If you wish to use mu4e for email, you will need to do some additional setup. There are many [[https://miikanissi.com/blog/email-setup-with-mbsync-mu4e][excellent guides online]] to help you. I also provide a template for my email settings (for multiple accounts using mu4e contexts) with my personal details removed.
-
-Default folders (you need to create these yourself if you do not have them)
-- Org agenda: =~/org/=
-- GTD: =~/org/gtd/=
-- Bongo: =~/Music/=
-- mu4e: =~/.mail/=
-- Citar: =~/org/papers/bibliography.bib=
-- Denote: =~/org/notes/=
-
+my emacs config files

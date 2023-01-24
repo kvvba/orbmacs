@@ -528,17 +528,19 @@
 ;;   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("ccls")))
 ;;   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp"))))
 
-;; (leaf markdown-mode
-;; 	:straight t)
-
-;; (leaf mmm-mode
-;; 	:straight t)
-
-;; (require 'basilisk-mode)
 
 ;; (leaf eglot-jl
 ;; 	:straight t
 ;; 	:init (eglot-jl-init))
+
+(leaf openfoam
+	:straight (openfoam
+						 :type git
+						 :host github
+						 :repo "kvvba/openfoam.el")
+	:blackout (openfoam-mode . "∇")
+	:config
+	(load-file "./config/openfoam-config.el"))
 
 (leaf company
   :straight t

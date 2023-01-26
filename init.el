@@ -340,12 +340,18 @@
 (leaf auctex
   :straight t)
 
-(leaf org-pandoc-import
-  :straight (org-pandoc-import
-						 :type git
-						 :host github
-						 :repo "tecosaur/org-pandoc-import"
-						 :files ("*.el" "filters" "preprocessors")))
+;; (leaf org-pandoc-import
+;;   :straight (org-pandoc-import
+;; 						 :type git
+;; 						 :host github
+;; 						 :repo "tecosaur/org-pandoc-import"
+;; 						 :files ("*.el" "filters" "preprocessors")))
+
+(leaf ox-pandoc
+	:straight t)
+
+(leaf pandoc
+	:straight t)
 
 (leaf olivetti
   :straight t
@@ -522,11 +528,10 @@
 ;; (leaf eglot
 ;; 	:straight t
 ;;   :leaf-defer
-;;   :hook ((c-mode-hook c++-mode-hook python-mode-hook) . eglot-ensure)
+;;   :hook ((c-mode-hook c++-mode-hook) . eglot-ensure)
 ;;   :config
 ;;   (add-to-list 'exec-path (expand-file-name "~/.local/bin/"))
-;;   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("ccls")))
-;;   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp"))))
+;;   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("ccls"))))
 
 
 ;; (leaf eglot-jl
@@ -538,7 +543,6 @@
 						 :type git
 						 :host github
 						 :repo "kvvba/openfoam.el")
-	:blackout (openfoam-mode . "∇")
 	:config
 	(load-file "./config/openfoam-config.el"))
 

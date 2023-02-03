@@ -102,10 +102,14 @@
   (setq insert-pair-alist '((40 41) (91 93) (123 125) (34 34) (39 39) (96 39)))
 	
 	(global-display-line-numbers-mode)
+	;; (global-linum-mode)
 
 	;; (eshell-command "xmodmap ~/.Xmodmap")
 
 	(setq custom-safe-themes t)
+	;; (load-theme 'modus-vivendi)
+	(setq modus-themes-mode-line '(borderless accented))
+	(load-theme 'modus-operandi)
 	
   ;; Cursor follows new window
   (defun split-and-follow-horizontally ()
@@ -124,12 +128,6 @@
 
   ;; Turn yes-or-no to y-or-n
   (setq use-short-answers t)
-
-  ;; Rebind keys for resizing
-  (global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
-  (global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)
-  (global-set-key (kbd "s-C-<down>") 'shrink-window)
-  (global-set-key (kbd "s-C-<up>") 'enlarge-window)
 
   ;; Highlight current line
   (global-hl-line-mode t)
@@ -163,6 +161,10 @@
   :hook
   (emacs-startup-hook . startup/revert-file-name-handler-alist))
 
+(leaf calc
+	:bind
+	("H-8" . calc))
+
 (leaf ispell
 	:config
 	(setq ispell-program-name "hunspell")
@@ -174,7 +176,7 @@
 
 (leaf eshell
 	:config
-	(load-file "~/.emacs.d/config/eshell.el")
+	(load-file "~/.emacs.d/config/eshell-config.el")
   :bind
   ("<C-s-return>" . eshell-other-window)
   ("C-c e" . eshell)
@@ -271,7 +273,7 @@
 (leaf meow
   :straight t
   :init
-  (load-file "~/.emacs.d/config/meow.el")
+  (load-file "~/.emacs.d/config/meow-config.el")
   (meow-setup)
   (meow-global-mode t)
   (meow-define-keys
@@ -407,7 +409,7 @@
 ;;   (mu4e-view-mode-map
 ;;    ("C-c c" . org-capture-mail))
 ;;   :defer-config
-;;   (load "~/.emacs.d/config/mail.el"))
+;;   (load "~/.emacs.d/config/mail-config.el"))
 
 ;; (leaf mu4e-alert
 ;;   :straight t
@@ -419,7 +421,7 @@
 
 ;; (leaf erc
 ;; 	:leaf-defer t
-;; 	:config (load-file "~/.emacs.d/config/erc.el")
+;; 	:config (load-file "~/.emacs.d/config/erc-config.el")
 ;; 	:bind
 ;; 	("C-c i" . erc))
 
@@ -458,7 +460,7 @@
 (leaf bongo
   :straight t
   :leaf-defer t
-  :config (load-file "~/.emacs.d/config/music.el")
+  :config (load-file "~/.emacs.d/config/bongo-config.el")
   :bind
   (("<C-XF86AudioPlay>" . bongo-pause/resume)
    ("<C-XF86AudioNext>" . bongo-next)
@@ -543,7 +545,7 @@
 						 :type git
 						 :host github
 						 :repo "kvvba/openfoam.el")
-	:config
+	:init
 	(load-file "./config/openfoam-config.el"))
 
 (leaf company
@@ -707,12 +709,19 @@
   :bind
   ("M-s" . avy-goto-char))
 
-(leaf ace-window
-  :straight t
-  :config
-  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
-  :bind
-  ("H-o" . ace-window))
+;; (leaf ace-window
+;;   :straight t
+;;   :config
+;;   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+;;   :bind
+;;   ("H-o" . ace-window))
+
+(leaf switch-window
+	:straight t
+	:config
+	(setq switch-window-shortcut-style 'qwerty)
+	:bind
+	("H-o" . switch-window))
 
 ;; (leaf async
 ;;   :straight t
@@ -741,23 +750,28 @@
   (prog-mode-hook . rainbow-delimiters-mode))
 
 
-(leaf lambda-themes
-  :straight (lambda-themes :type git :host github :repo "kvvba/lambda-themes")
-  :custom
-  (lambda-themes-set-italic-comments . t)
-  (lambda-themes-set-italic-keywords . t)
-  (lambda-themes-set-variable-pitch . t))
+;; (leaf lambda-themes
+;;   :straight (lambda-themes :type git :host github :repo "kvvba/lambda-themes")
+;;   :custom
+;;   (lambda-themes-set-italic-comments . t)
+;;   (lambda-themes-set-italic-keywords . t)
+;;   (lambda-themes-set-variable-pitch . t))
 
-;; (leaf ef-themes
-;; 	:straight t)
+(leaf ef-themes
+	:straight t)
 
-;; (leaf standard-themes
-;; 	:straight t)
-
-(leaf doom-themes
+(leaf standard-themes
 	:straight t
 	:config
-	(load-theme 'doom-solarized-dark))
+	;; (load-theme 'standard-dark)
+	(setq standard-themes-italic-constructs t)
+	)
+
+;; (leaf doom-themes
+;; 	:straight t
+;; 	:config
+;; 	;; (load-theme 'doom-solarized-dark)
+;; 	)
 
 ;; (leaf nix-mode
 ;; 	:straight t
@@ -768,13 +782,11 @@
   :blackout t
   :init (global-flycheck-mode))
 
-;; (leaf doom-modeline
-;; 	:straight t
-;; 	:init (doom-modeline-mode 1))
 
-(leaf simple-modeline
-	:straight t
-	:init (simple-modeline-mode))
+;; (leaf simple-modeline
+;; 	:straight t
+;; 	:init (simple-modeline-mode)
+;; 	)
 
 (leaf dashboard
 	:straight t

@@ -84,5 +84,5 @@
    '("z" . meow-pop-selection)
    '("'" . repeat)
    '("<escape>" . ignore)))
-(provide 'meow)
-;;; meow.el ends here
+(provide 'meow-config)
+;;; meow-config.el ends here

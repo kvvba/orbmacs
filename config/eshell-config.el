@@ -37,3 +37,6 @@
 				(other-window 1)
 				(eshell))
 		(switch-to-buffer-other-window "*eshell*")))
+
+(provide 'eshell-config)
+;;; eshell-config.el ends here

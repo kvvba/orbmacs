@@ -227,5 +227,5 @@ Also see `prot/bongo-playlist-insert-playlist-file'."
       (save-buffer)
       (kill-buffer))))
 
-(provide 'music)
-;;; music.el ends here
+(provide 'bongo-config)
+;;; bongo-config.el ends here

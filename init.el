@@ -154,7 +154,6 @@
   ("C-x C-z" . nil)
   ("H-b" . consult-buffer)
   ("H-B" . consult-buffer-other-window)
-  ("H-k" . kill-buffer)
 	("H-0" . delete-window)
 	("M-[" . backward-paragraph)
 	("M-]" . forward-paragraph)

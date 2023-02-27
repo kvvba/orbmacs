@@ -108,8 +108,7 @@
 
 	(setq custom-safe-themes t)
 	;; (load-theme 'modus-vivendi)
-	(setq modus-themes-mode-line '(borderless accented))
-	(load-theme 'modus-operandi)
+	;; (setq modus-themes-mode-line '(borderless accented))
 	
   ;; Cursor follows new window
   (defun split-and-follow-horizontally ()
@@ -133,8 +132,8 @@
   (global-hl-line-mode t)
 
   (set-face-attribute 'default nil
-											:family "Source Code Pro"
-											:height 100
+											:family "FiraCode"
+											:height 110
 											:weight 'normal
 											:width 'normal
 											)
@@ -167,7 +166,7 @@
 (leaf ispell
 	:config
 	(setq ispell-program-name "hunspell")
-	(setq ispell-dictionary "en_GB"))
+	(setq ispell-dictionary "british"))
 
 (leaf flypsell
 	:config
@@ -281,6 +280,9 @@
     '("Q" . avy-goto-line)
 		'("%" . meow-query-replace)))
 
+;; (leaf multiple-cursors
+;; 	:straight t)
+
 (leaf org
 	:straight t
 	:blackout visual-line-mode
@@ -300,7 +302,8 @@
   (org-mode-hook . (lambda ()
 										 (org-indent-mode)
 										 (blackout 'org-indent-mode)))
-  (org-after-todo-statistics-hook . org-summary-todo))
+  ;; (org-after-todo-statistics-hook . org-summary-todo)
+	)
 
 (leaf org-modern
 	:straight t
@@ -748,7 +751,6 @@
   :hook
   (prog-mode-hook . rainbow-delimiters-mode))
 
-
 ;; (leaf lambda-themes
 ;;   :straight (lambda-themes :type git :host github :repo "kvvba/lambda-themes")
 ;;   :custom
@@ -756,21 +758,20 @@
 ;;   (lambda-themes-set-italic-keywords . t)
 ;;   (lambda-themes-set-variable-pitch . t))
 
-(leaf ef-themes
-	:straight t)
+;; (leaf ef-themes
+;; 	:straight t)
 
-(leaf standard-themes
-	:straight t
-	:config
-	;; (load-theme 'standard-dark)
-	(setq standard-themes-italic-constructs t)
-	)
-
-;; (leaf doom-themes
+;; (leaf standard-themes
 ;; 	:straight t
 ;; 	:config
-;; 	;; (load-theme 'doom-solarized-dark)
+;; 	;; (load-theme 'standard-dark)
+;; 	(setq standard-themes-italic-constructs t)
 ;; 	)
+
+(leaf doom-themes
+	:straight t
+	:init
+	(load-theme 'doom-one))
 
 ;; (leaf nix-mode
 ;; 	:straight t
@@ -782,10 +783,10 @@
   :init (global-flycheck-mode))
 
 
-;; (leaf simple-modeline
-;; 	:straight t
-;; 	:init (simple-modeline-mode)
-;; 	)
+(leaf simple-modeline
+	:straight t
+	:init (simple-modeline-mode)
+	)
 
 (leaf dashboard
 	:straight t
@@ -798,6 +799,12 @@
                         (bookmarks . 15)
                         (agenda . 5)))
 	(setq dashboard-set-footer nil))
+
+(leaf typit
+	:straight t)
+
+(leaf markdown-mode
+	:straight t)
 
 (provide 'init)
 ;;; init.el ends here

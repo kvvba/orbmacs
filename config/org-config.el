@@ -25,16 +25,15 @@
 
 (setq org-agenda-files '("~/org/gtd/inbox.org"
 												 ;; "~/org/gtd/corkboard.org"
-												 "~/org/gtd/reminders.org"
-												 "~/org/timetable.org"))
+												 "~/org/gtd/reminders.org"))
 ;; (setq recentf-exclude '("\\.org\\"))
 (setq org-todo-keywords
 			'((sequence "TODO" "|" "DONE" )))
 ;; (setq org-clock-sound "~/.emacs.d/media/digital_alarm.wav")
 
-(defun org-summary-todo (n-done n-not-done)
-	(let (org-log-done org-log-states)   ; turn off logging
-		(org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+;; (defun org-summary-todo (n-done n-not-done)
+;; 	(let (org-log-done org-log-states)   ; turn off logging
+;; 		(org-todo (if (= n-not-done 0) "DONE" "TODO"))))
 
 (setq org-refile-targets '(("~/org/gtd/reminders.org" :maxlevel . 2)
 													 ("~/org/gtd/someday.org" :level . 1)

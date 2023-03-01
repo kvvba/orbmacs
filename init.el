@@ -294,6 +294,7 @@
   ("C-c b" . org-cite-insert)
 	;; ("C-c t" . hydra-timer/body)
 	("C-c r" . org-refile)
+	("C-M-<return>" . org-insert-subheading)
   :hook
   (org-mode-hook . (lambda ()
 										 (flyspell-mode)
@@ -580,7 +581,7 @@
   :init
   (setq denote-directory "~/org/notes/")
   (setq denote-dired-directories
-				(list denote-directory "~/org/papers/reference"))
+				(list denote-directory))
   :config
 	(defun my-denote-journal ()
 		"Create an entry tagged 'journal' with the date as its title."

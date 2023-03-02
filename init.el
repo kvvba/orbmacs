@@ -288,12 +288,9 @@
 	:blackout visual-line-mode
   :config
 	(load-file "~/.emacs.d/config/org-config.el")
+	(load-file "~/.emacs.d/config/gtd.el")
   :bind
-  ("H-c" . org-capture)
-  ("C-c a" . org-agenda)
   ("C-c b" . org-cite-insert)
-	;; ("C-c t" . hydra-timer/body)
-	("C-c r" . org-refile)
 	("C-M-<return>" . org-insert-subheading)
   :hook
   (org-mode-hook . (lambda ()
@@ -325,11 +322,21 @@
 	:hook
 	(org-indent-mode-hook . org-modern-indent-mode))
 
-(leaf pomorg
-  :straight (pomorg
-             :type git
-             :host github
-             :repo "kvvba/pomorg"))
+;; (leaf pomorg
+;;   :straight (pomorg
+;;              :type git
+;;              :host github
+;;              :repo "kvvba/pomorg")
+;; 	:config
+;; 	(setq pomo-time-work "00:50:00")
+;;   (setq pomo-time-break "00:10:00")
+;;   (setq pomo-time-long-break "01:00:00")
+;;   (setq pomo-long-break-interval 4)
+;; 	:bind
+;; 	("C-c t b" . pomo-start)
+;; 	("C-c t s" . pomo-stop)
+;; 	("C-c t n" . pomo-show-completed)
+;; 	("C-c t p" . pomo-pause-or-continue))
 
 (leaf nov
 	:straight t
@@ -375,7 +382,7 @@
   :straight t
   :after org
   :custom
-  (org-cite-global-bibliography . '("~/org/papers/references.bib"))
+  (org-cite-global-bibliography . '("~/Documents/org/papers/references.bib"))
   (org-cite-insert-processor . 'citar)
   (org-cite-follow-processor . 'citar)
   (org-cite-activate-processor . 'citar)
@@ -579,7 +586,7 @@
 						 :host github
 						 :repo "protesilaos/denote")
   :init
-  (setq denote-directory "~/org/notes/")
+  (setq denote-directory "~/Documents/org/notes/")
   (setq denote-dired-directories
 				(list denote-directory))
   :config
@@ -616,8 +623,8 @@
 						 :host github
 						 :repo "mclear-tools/consult-notes")
   :init
-  (setq consult-notes-sources '(("notes" ?n "~/org/notes/")
-																("papers" ?p "~/org/papers/")))
+  (setq consult-notes-sources '(("notes" ?n "~/Documents/org/notes/")
+																("papers" ?p "~/Documents/org/papers/")))
   (defun jakub/consult-notes-ripgrep ()
 		(interactive)
 		(consult-ripgrep denote-directory))
@@ -628,7 +635,7 @@
 (leaf easy-jekyll
 	:straight t
 	:config
-	(setq easy-jekyll-basedir "~/org/blog/")
+	(setq easy-jekyll-basedir "~/Documents/org/blog/")
 	(setq easy-jekyll-url "https://kvvba.github.io/")
 	:bind
 	("C-c j" . easy-jekyll))

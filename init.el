@@ -133,7 +133,7 @@
 
   (set-face-attribute 'default nil
 											:family "FiraCode"
-											:height 110
+											:height 100
 											:weight 'normal
 											:width 'normal
 											)
@@ -154,6 +154,7 @@
   ("H-b" . consult-buffer)
   ("H-B" . consult-buffer-other-window)
 	("H-0" . delete-window)
+	("H-1" . delete-other-windows)
 	("M-[" . backward-paragraph)
 	("M-]" . forward-paragraph)
   :hook
@@ -221,7 +222,8 @@
    ("K" . dired-kill-subdir)
 	 ("H-n" . dired-next-subdir)
 	 ("H-p" . dired-prev-subdir)
-	 ("C-x C-j" . dired-jump))
+	 ("C-x C-j" . dired-jump)
+	 ("H-f" . find-name-dired))
 	:hook
 	(dired-mode-hook . dired-hide-details-mode))
 
@@ -309,8 +311,9 @@
 	(setq org-modern-tag nil)
 	(setq org-modern-list
         '((?+ . "•")
-          (?- . "–")
-          (?* . "◦")))
+          (?- . "–")))
+	(setq org-modern-star
+				'("*"))
 	(setq org-modern-radio-target nil)
 	(global-org-modern-mode))
 
@@ -556,7 +559,9 @@
 						 :host github
 						 :repo "kvvba/openfoam.el")
 	:init
-	(load-file "./config/openfoam-config.el"))
+	(load-file "./config/openfoam-config.el")
+	:hook
+	(c++-mode-hook . openfoam-c++-mode))
 
 (leaf company
   :straight t

@@ -106,10 +106,6 @@
 
 	;; (eshell-command "xmodmap ~/.Xmodmap")
 
-	(setq custom-safe-themes t)
-	;; (load-theme 'modus-vivendi)
-	;; (setq modus-themes-mode-line '(borderless accented))
-	
   ;; Cursor follows new window
   (defun split-and-follow-horizontally ()
 		(interactive)
@@ -147,7 +143,14 @@
 	(setq log-warning-minimum-level :error)
 	(setq sentence-end-double-space nil)
 	(display-time-mode)
-  :bind
+
+	(setq custom-safe-themes t)
+	(setq modus-themes-mode-line '(borderless))
+	(load-theme 'modus-operandi)
+
+	(setq ediff-split-window-function 'split-window-sensibly)
+
+	:bind
   ;; Hitting suspend frame by accident is annoying me
   ("C-z" . nil)
   ("C-x C-z" . nil)
@@ -183,6 +186,13 @@
 	:hook
 	(eshell-mode-hook . eat-eshell-visual-command-mode)
 	(eshell-mode-hook . eat-eshell-mode))
+
+(leaf exec-path-from-shell
+	:straight t
+	:init
+	(when (memq window-system '(mac ns x))
+		(exec-path-from-shell-initialize))
+	(exec-path-from-shell-copy-envs '("WM_PROJECT" "WM_PROJECT_DIR" "WM_PROJECT_USER_DIR")))
 
 (leaf detached
 	:straight t
@@ -223,7 +233,9 @@
 	 ("H-n" . dired-next-subdir)
 	 ("H-p" . dired-prev-subdir)
 	 ("C-x C-j" . dired-jump)
-	 ("H-f" . find-name-dired))
+	 ("H-f" . find-name-dired)
+	 ("W" . wdired-change-to-wdired-mode)
+	 ("r" . rgrep))
 	:hook
 	(dired-mode-hook . dired-hide-details-mode))
 
@@ -368,13 +380,6 @@
 (leaf pandoc
 	:straight t)
 
-(leaf olivetti
-  :straight t
-  :config
-  (setq olivetti-style 'fancy)
-  :bind
-  ("C-c O" . olivetti-mode))
-
 (leaf page-break-lines
   :straight t
   :blackout t
@@ -518,7 +523,9 @@
                       "*.ti" ("terminfo/e" "terminfo/e/*")
                       ("terminfo/65" "terminfo/65/*")
                       ("integration" "integration/*")
-                      (:exclude ".dir-locals.el" "*-tests.el"))))
+                      (:exclude ".dir-locals.el" "*-tests.el")))
+	:bind
+	("C-c v" . eat))
 
 (leaf slime
   :straight t
@@ -543,10 +550,13 @@
 ;; (leaf eglot
 ;; 	:straight t
 ;;   :leaf-defer
-;;   :hook ((c-mode-hook c++-mode-hook) . eglot-ensure)
+;;   :hook
+;; 	((c-mode-hook c++-mode-hook) . eglot-ensure)
+;; 	;; (openfoam-mode-hook . eglot-ensure)
 ;;   :config
-;;   (add-to-list 'exec-path (expand-file-name "~/.local/bin/"))
-;;   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("ccls"))))
+;;   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("ccls")))
+;; 	;; (add-to-list 'eglot-server-programs '((openfoam-code) . ))
+;; 	)
 
 
 ;; (leaf eglot-jl
@@ -781,10 +791,10 @@
 ;; 	(setq standard-themes-italic-constructs t)
 ;; 	)
 
-(leaf doom-themes
-	:straight t
-	:init
-	(load-theme 'doom-one))
+;; (leaf doom-themes
+;; 	:straight t
+;; 	:init
+;; 	(load-theme 'doom-one))
 
 ;; (leaf nix-mode
 ;; 	:straight t
@@ -819,5 +829,27 @@
 (leaf markdown-mode
 	:straight t)
 
+(leaf olivetti
+	:straight t)
+
+(leaf Emacs-wgrep
+	:straight (Emacs-wgrep
+						 :type git
+						 :host github
+						 :repo "mhayashi1120/Emacs-wgrep"))
+
 (provide 'init)
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files
+	 '("/home/jakub/Documents/org/gtd/agenda.org" "/home/jakub/Documents/org/gtd/corkboard.org" "/home/jakub/Documents/org/gtd/inbox.org" "/home/jakub/Documents/org/gtd/notes.org" "/home/jakub/Documents/org/gtd/reminders.org")))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

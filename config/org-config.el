@@ -22,7 +22,17 @@
 								 ("\\paragraph{%s}" . "\\paragraph*{%s}")
 								 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
-(setq org-startup-with-inline-images t)
+(with-eval-after-load 'ox-latex
+	(add-to-list 'org-latex-classes
+							 '("extarticle"
+								 "\\documentclass{extarticle}"
+								 ("\\section{%s}" . "\\section*{%s}")
+								 ("\\subsection{%s}" . "\\subsection*{%s}")
+								 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+								 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+								 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
+;; (setq org-startup-with-inline-images t)
 
 (provide 'org-config.el)
 ;;; org-config.el ends here

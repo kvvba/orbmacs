@@ -146,7 +146,7 @@
 
 	(setq custom-safe-themes t)
 	(setq modus-themes-mode-line '(borderless))
-	(load-theme 'modus-operandi)
+	(load-theme 'modus-vivendi)
 
 	(setq ediff-split-window-function 'split-window-sensibly)
 
@@ -353,6 +353,18 @@
 ;; 	("C-c t n" . pomo-show-completed)
 ;; 	("C-c t p" . pomo-pause-or-continue))
 
+;; (leaf pomm
+;; 	:straight t
+;; 	:config
+;; 	(setq pomm-work-period 50)
+;; 	(setq pomm-short-break-period 10)
+;; 	(setq pomm-long-break-period 40)
+;; 	(setq pomm-audio-enabled t)
+;; 	(setq pomm-audio-player-executable "vlc")
+;; 	(setq alert-default-style 'libnotify)
+;; 	:init
+;; 	(pomm-mode-line-mode))
+
 (leaf nov
 	:straight t
 	:config
@@ -525,7 +537,7 @@
                       ("integration" "integration/*")
                       (:exclude ".dir-locals.el" "*-tests.el")))
 	:bind
-	("C-c v" . eat))
+	("C-c v" . (lambda() (interactive) (eat "/bin/bash"))))
 
 (leaf slime
   :straight t
@@ -603,14 +615,15 @@
   :init
   (setq denote-directory "~/Documents/org/notes/")
   (setq denote-dired-directories
-				(list denote-directory))
+				(list denote-directory "~/Documents/org/journal/"))
   :config
 	(defun my-denote-journal ()
 		"Create an entry tagged 'journal' with the date as its title."
 		(interactive)
-		(denote
-		 (format-time-string "%A %e %B %Y") ; format like Tuesday 14 June 2022
-		 '("journal"))) ; multiple keywords are a list of strings: '("one" "two")
+		(let ((denote-directory "~/Documents/org/journal/"))
+			(denote
+			 (format-time-string "%A %e %B %Y") ; format like Tuesday 14 June 2022
+			 '("journal")))) ; multiple keywords are a list of strings: '("one" "two")
 	(setq denote-backlinks-show-context t)
 	(setq denote-known-keywords nil)
   :hook
@@ -823,9 +836,6 @@
                         (agenda . 5)))
 	(setq dashboard-set-footer nil))
 
-(leaf typit
-	:straight t)
-
 (leaf markdown-mode
 	:straight t)
 
@@ -838,18 +848,8 @@
 						 :host github
 						 :repo "mhayashi1120/Emacs-wgrep"))
 
+;; (leaf modus-themes
+;; 	:straight t)
+
 (provide 'init)
 ;;; init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files
-	 '("/home/jakub/Documents/org/gtd/agenda.org" "/home/jakub/Documents/org/gtd/corkboard.org" "/home/jakub/Documents/org/gtd/inbox.org" "/home/jakub/Documents/org/gtd/notes.org" "/home/jakub/Documents/org/gtd/reminders.org")))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

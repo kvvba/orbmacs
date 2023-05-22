@@ -52,6 +52,8 @@
   (setq gc-cons-threshold most-positive-fixnum)
   (defun startup/reset-gc () (setq gc-cons-threshold startup/gc-cons-threshold))
 
+	;; (remove-hook 'find-file-hook 'vc-refresh-state)
+	
   (defvar startup/file-name-handler-alist file-name-handler-alist)
   (setq file-name-handler-alist nil)
 
@@ -580,10 +582,9 @@
 						 :type git
 						 :host github
 						 :repo "kvvba/openfoam.el")
-	:init
-	(load-file "./config/openfoam-config.el")
-	:hook
-	(c++-mode-hook . openfoam-c++-mode))
+	;; :hook
+	;; (c++-mode-hook . openfoam-c++-mode)
+	)
 
 (leaf company
   :straight t
@@ -681,28 +682,28 @@
   ("C-x r b" . consult-bookmark)
   ("H-r" . consult-ripgrep))
 
-(leaf embark
-  :straight t
-  :bind
-  (("C-." . embark-act)         ;; pick some comfortable binding
-   ("C-;" . embark-dwim)        ;; good alternative: M-.
-   ("C-h b" . embark-bindings)) ;; alternative for `describe-bindings'
-  :init
-  ;; Optionally replace the key help with a completing-read interface
-  (setq prefix-help-command #'embark-prefix-help-command)
-  :config
-  ;; Hide the mode line of the Embark live/completions buffers
-  (add-to-list 'display-buffer-alist
-							 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-								 nil
-								 (window-parameters (mode-line-format . none)))))
+;; (leaf embark
+;;   :straight t
+;;   :bind
+;;   (("C-." . embark-act)         ;; pick some comfortable binding
+;;    ("C-;" . embark-dwim)        ;; good alternative: M-.
+;;    ("C-h b" . embark-bindings)) ;; alternative for `describe-bindings'
+;;   :init
+;;   ;; Optionally replace the key help with a completing-read interface
+;;   (setq prefix-help-command #'embark-prefix-help-command)
+;;   :config
+;;   ;; Hide the mode line of the Embark live/completions buffers
+;;   (add-to-list 'display-buffer-alist
+;; 							 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+;; 								 nil
+;; 								 (window-parameters (mode-line-format . none)))))
 
-(leaf embark-consult
-  :straight t
-  :after (embark consult)
-  :leaf-defer nil
-  :hook
-  (embark-collect-mode-hook . consult-preview-at-point-mode))
+;; (leaf embark-consult
+;;   :straight t
+;;   :after (embark consult)
+;;   :leaf-defer nil
+;;   :hook
+;;   (embark-collect-mode-hook . consult-preview-at-point-mode))
 
 (leaf savehist
   :straight t
@@ -805,18 +806,16 @@
 ;; 	)
 
 ;; (leaf doom-themes
-;; 	:straight t
-;; 	:init
-;; 	(load-theme 'doom-one))
+;; 	:straight t)
 
 ;; (leaf nix-mode
 ;; 	:straight t
 ;;   :mode "\\.nix\\'")
 
-(leaf flycheck
-  :straight t
-  :blackout t
-  :init (global-flycheck-mode))
+;; (leaf flycheck
+;;   :straight t
+;;   :blackout t
+;;   :init (global-flycheck-mode))
 
 
 (leaf simple-modeline
@@ -850,6 +849,38 @@
 
 ;; (leaf modus-themes
 ;; 	:straight t)
+
+;; (when (window-system)
+;;   (set-frame-font "Fira Code"))
+;; (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
+;;                (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
+;;                (36 . ".\\(?:>\\)")
+;;                (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
+;;                (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
+;;                (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
+;;                (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
+;;                (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
+;;                (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
+;;                (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
+;;                (48 . ".\\(?:x[a-zA-Z]\\)")
+;;                (58 . ".\\(?:::\\|[:=]\\)")
+;;                (59 . ".\\(?:;;\\|;\\)")
+;;                (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
+;;                (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
+;;                (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
+;;                (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
+;;                (91 . ".\\(?:]\\)")
+;;                (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
+;;                (94 . ".\\(?:=\\)")
+;;                (119 . ".\\(?:ww\\)")
+;;                (123 . ".\\(?:-\\)")
+;;                (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
+;;                (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)")
+;;                )
+;;              ))
+;;   (dolist (char-regexp alist)
+;;     (set-char-table-range composition-function-table (car char-regexp)
+;;                           `([,(cdr char-regexp) 0 font-shape-gstring]))))
 
 (provide 'init)
 ;;; init.el ends here

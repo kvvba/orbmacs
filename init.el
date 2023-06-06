@@ -148,7 +148,7 @@
 
 	(setq custom-safe-themes t)
 	(setq modus-themes-mode-line '(borderless))
-	(load-theme 'modus-vivendi)
+	(load-theme 'modus-operandi)
 
 	(setq ediff-split-window-function 'split-window-sensibly)
 
@@ -158,10 +158,12 @@
   ("C-x C-z" . nil)
   ("H-b" . consult-buffer)
   ("H-B" . consult-buffer-other-window)
+	("H-O" . consult-outline)
 	("H-0" . delete-window)
 	("H-1" . delete-other-windows)
 	("M-[" . backward-paragraph)
 	("M-]" . forward-paragraph)
+	("C-x C-b" . ibuffer)
   :hook
   (emacs-startup-hook . startup/revert-file-name-handler-alist))
 
@@ -294,7 +296,9 @@
       'normal
     '("P" . consult-yank-pop)
     '("Q" . avy-goto-line)
-		'("%" . meow-query-replace)))
+		'("%" . meow-query-replace)
+		'("S" . avy-kill-region)
+		'("V" . avy-kill-ring-save-region)))
 
 ;; (leaf multiple-cursors
 ;; 	:straight t)
@@ -481,13 +485,13 @@
 					("http://feeds.arstechnica.com/arstechnica/index" news tech)
 					("https://www.sciencedaily.com/rss/top/technology.xml" news tech)
 					("https://planet.emacslife.com/zh/atom.xml" emacs)))
-		:bind
-		("C-c w" . elfeed)
-		("C-c W" . elfeed-other-frame)
-		(elfeed-search-mode-map
-		 ("U" . elfeed-update))
-		:hook
-		(elfeed-show-mode-hook . visual-line-mode))
+	:bind
+	("C-c w" . elfeed)
+	("C-c W" . elfeed-other-frame)
+	(elfeed-search-mode-map
+	 ("U" . elfeed-update))
+	:hook
+	(elfeed-show-mode-hook . visual-line-mode))
 
 (leaf bongo
   :straight t
@@ -534,10 +538,10 @@
 						 :host codeberg
 						 :repo "akib/emacs-eat"
 						 :files ("*.el" ("term" "term/*.el") "*.texi"
-                      "*.ti" ("terminfo/e" "terminfo/e/*")
-                      ("terminfo/65" "terminfo/65/*")
-                      ("integration" "integration/*")
-                      (:exclude ".dir-locals.el" "*-tests.el")))
+                     "*.ti" ("terminfo/e" "terminfo/e/*")
+                     ("terminfo/65" "terminfo/65/*")
+                     ("integration" "integration/*")
+                     (:exclude ".dir-locals.el" "*-tests.el")))
 	:bind
 	("C-c v" . (lambda() (interactive) (eat "/bin/bash"))))
 
@@ -682,28 +686,28 @@
   ("C-x r b" . consult-bookmark)
   ("H-r" . consult-ripgrep))
 
-;; (leaf embark
-;;   :straight t
-;;   :bind
-;;   (("C-." . embark-act)         ;; pick some comfortable binding
-;;    ("C-;" . embark-dwim)        ;; good alternative: M-.
-;;    ("C-h b" . embark-bindings)) ;; alternative for `describe-bindings'
-;;   :init
-;;   ;; Optionally replace the key help with a completing-read interface
-;;   (setq prefix-help-command #'embark-prefix-help-command)
-;;   :config
-;;   ;; Hide the mode line of the Embark live/completions buffers
-;;   (add-to-list 'display-buffer-alist
-;; 							 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-;; 								 nil
-;; 								 (window-parameters (mode-line-format . none)))))
+(leaf embark
+  :straight t
+  :bind
+  (("C-." . embark-act)         ;; pick some comfortable binding
+   ("C-;" . embark-dwim)        ;; good alternative: M-.
+   ("C-h b" . embark-bindings)) ;; alternative for `describe-bindings'
+  :init
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+							 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+								 nil
+								 (window-parameters (mode-line-format . none)))))
 
-;; (leaf embark-consult
-;;   :straight t
-;;   :after (embark consult)
-;;   :leaf-defer nil
-;;   :hook
-;;   (embark-collect-mode-hook . consult-preview-at-point-mode))
+(leaf embark-consult
+  :straight t
+  :after (embark consult)
+  :leaf-defer nil
+  :hook
+  (embark-collect-mode-hook . consult-preview-at-point-mode))
 
 (leaf savehist
   :straight t
@@ -789,24 +793,19 @@
   (prog-mode-hook . rainbow-delimiters-mode))
 
 ;; (leaf lambda-themes
-;;   :straight (lambda-themes :type git :host github :repo "kvvba/lambda-themes")
+;;   :straight (lambda-themes :type git :host github :repo "Lambda-Emacs/lambda-themes")
 ;;   :custom
 ;;   (lambda-themes-set-italic-comments . t)
 ;;   (lambda-themes-set-italic-keywords . t)
-;;   (lambda-themes-set-variable-pitch . t))
+;;   (lambda-themes-set-variable-pitch . nil))
 
-;; (leaf ef-themes
-;; 	:straight t)
-
-;; (leaf standard-themes
-;; 	:straight t
-;; 	:config
-;; 	;; (load-theme 'standard-dark)
-;; 	(setq standard-themes-italic-constructs t)
-;; 	)
-
-;; (leaf doom-themes
-;; 	:straight t)
+(leaf ef-themes
+	:straight t)
+(leaf standard-themes
+	:straight t
+	:config
+	;; (load-theme 'standard-dark)
+	(setq standard-themes-italic-constructs t))
 
 ;; (leaf nix-mode
 ;; 	:straight t
@@ -818,10 +817,10 @@
 ;;   :init (global-flycheck-mode))
 
 
-(leaf simple-modeline
-	:straight t
-	:init (simple-modeline-mode)
-	)
+;; (leaf simple-modeline
+;; 	:straight t
+;; 	:init (simple-modeline-mode)
+;; 	)
 
 (leaf dashboard
 	:straight t
@@ -831,8 +830,7 @@
 	(setq dashboard-center-content t)
 	(setq dashboard-banner-logo-title "Welcome to Orbmacs")
 	(setq dashboard-items '((recents  . 5)
-                        (bookmarks . 15)
-                        (agenda . 5)))
+													(bookmarks . 15)))
 	(setq dashboard-set-footer nil))
 
 (leaf markdown-mode

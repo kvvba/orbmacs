@@ -31,7 +31,7 @@
 (setq org-refile-use-outline-path 'file)
 (setq org-outline-path-complete-in-steps nil)
 (setq org-refile-targets
-      '(("corkboard.org" :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
+      '(("corkboard.org" :maxlevel . 1)))
 
 (setq org-agenda-hide-tags-regexp ".")
 

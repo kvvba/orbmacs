@@ -43,7 +43,7 @@
   :blackout (emacs-lisp-mode . "λ")
   :blackout abbrev-mode
   :init
-	(setq inhibit-startup-screen t)
+	;; (setq inhibit-startup-screen t)
 	;; (list-bookmarks)
 	;; (switch-to-buffer "*Bookmark List*")
 	
@@ -138,7 +138,7 @@
 
   (defun concat-string-list (list)
 		"Return a string which is a concatenation of all elements of the list separated by spaces"
-		(mapconcat '(lambda (obj) (format "%s" obj)) list " "))
+		(mapconcat #'(lambda (obj) (format "%s" obj)) list " "))
   (require 'cl-lib)
   (setq inferior-lisp-program "sbcl")
   (setq enable-recursive-minibuffers t)
@@ -158,7 +158,7 @@
   ("C-x C-z" . nil)
   ("H-b" . consult-buffer)
   ("H-B" . consult-buffer-other-window)
-	("H-O" . consult-outline)
+	("H-h" . consult-outline)
 	("H-0" . delete-window)
 	("H-1" . delete-other-windows)
 	("M-[" . backward-paragraph)
@@ -254,11 +254,6 @@
 					:package dired
 					("/" . dired-narrow))))
 
-;; (leaf dired-collapse
-;; 	:straight t
-;; 	:after dired
-;; 	:hook (dired-mode-hook . dired-collapse-mode))
-
 (leaf all-the-icons
 	:straight t)
 
@@ -276,16 +271,6 @@
 	:hook
 	(marginalia-mode-hook . all-the-icons-completion-marginalia-setup))
 
-;; (leaf dirvish
-;; 	:straight t
-;; 	:after dired
-;; 	;; :init
-;; 	;; (dirvish-override-dired-mode)
-;; 	:bind
-;; 	(dired-mode-map
-;; 	 ("s" . dirvish-quicksort)
-;; 	 ("TAB" . dirvish-subtree-toggle)))
-
 (leaf meow
   :straight t
   :init
@@ -299,9 +284,6 @@
 		'("%" . meow-query-replace)
 		'("S" . avy-kill-region)
 		'("V" . avy-kill-ring-save-region)))
-
-;; (leaf multiple-cursors
-;; 	:straight t)
 
 (leaf org
 	:straight t
@@ -342,34 +324,6 @@
 						 :repo "jdtsmith/org-modern-indent")
 	:hook
 	(org-indent-mode-hook . org-modern-indent-mode))
-
-;; (leaf pomorg
-;;   :straight (pomorg
-;;              :type git
-;;              :host github
-;;              :repo "kvvba/pomorg")
-;; 	:config
-;; 	(setq pomo-time-work "00:50:00")
-;;   (setq pomo-time-break "00:10:00")
-;;   (setq pomo-time-long-break "01:00:00")
-;;   (setq pomo-long-break-interval 4)
-;; 	:bind
-;; 	("C-c t b" . pomo-start)
-;; 	("C-c t s" . pomo-stop)
-;; 	("C-c t n" . pomo-show-completed)
-;; 	("C-c t p" . pomo-pause-or-continue))
-
-;; (leaf pomm
-;; 	:straight t
-;; 	:config
-;; 	(setq pomm-work-period 50)
-;; 	(setq pomm-short-break-period 10)
-;; 	(setq pomm-long-break-period 40)
-;; 	(setq pomm-audio-enabled t)
-;; 	(setq pomm-audio-player-executable "vlc")
-;; 	(setq alert-default-style 'libnotify)
-;; 	:init
-;; 	(pomm-mode-line-mode))
 
 (leaf nov
 	:straight t
@@ -455,43 +409,37 @@
 ;;   (mu4e-alert-enable-mode-line-display)
 ;;   (mu4e-alert-enable-notifications))
 
-;; (leaf erc
-;; 	:leaf-defer t
-;; 	:config (load-file "~/.emacs.d/config/erc-config.el")
+;; (leaf elfeed
+;; 	:straight t
+;; 	:init
+;; 	(defun elfeed-other-frame ()
+;; 		"Opens elfeed in a new frame."
+;; 		(interactive)
+;; 		(switch-to-buffer-other-frame "*elfeed-search*")
+;; 		(elfeed))
+;; 	:config
+;; 	(setq elfeed-feeds
+;; 				'(("https://rss.sciencedirect.com/publication/science/03019322" work fluids)
+;; 					("https://rss.sciencedirect.com/publication/science/13594311" work fluids)
+;; 					("https://rss.sciencedirect.com/publication/science/0142727X" work fluids)
+;; 					("https://rss.sciencedirect.com/publication/science/00457930" work fluids)
+;; 					("https://www.mdpi.com/rss/journal/fluids" work fluids)
+;; 					("https://www.cambridge.org/core/rss/product/id/1F51BCFAA50101CAF5CB9A20F8DEA3E4" work fluids)
+;; 					("https://www.annualreviews.org/r/fluid_rss" work fluids)
+;; 					("https://onlinelibrary.wiley.com/journal/10970363#" work fluids)
+;; 					("https://juliacomputing.com/feed.xml" work ml)
+;; 					("https://masteringemacs.org/feed" emacs)
+;; 					("https://protesilaos.com/master.xml" prot)
+;; 					("http://feeds.arstechnica.com/arstechnica/index" news tech)
+;; 					("https://www.sciencedaily.com/rss/top/technology.xml" news tech)
+;; 					("https://planet.emacslife.com/zh/atom.xml" emacs)))
 ;; 	:bind
-;; 	("C-c i" . erc))
-
-(leaf elfeed
-	:straight t
-	:init
-	(defun elfeed-other-frame ()
-		"Opens elfeed in a new frame."
-		(interactive)
-		(switch-to-buffer-other-frame "*elfeed-search*")
-		(elfeed))
-	:config
-	(setq elfeed-feeds
-				'(("https://rss.sciencedirect.com/publication/science/03019322" work fluids)
-					("https://rss.sciencedirect.com/publication/science/13594311" work fluids)
-					("https://rss.sciencedirect.com/publication/science/0142727X" work fluids)
-					("https://rss.sciencedirect.com/publication/science/00457930" work fluids)
-					("https://www.mdpi.com/rss/journal/fluids" work fluids)
-					("https://www.cambridge.org/core/rss/product/id/1F51BCFAA50101CAF5CB9A20F8DEA3E4" work fluids)
-					("https://www.annualreviews.org/r/fluid_rss" work fluids)
-					("https://onlinelibrary.wiley.com/journal/10970363#" work fluids)
-					("https://juliacomputing.com/feed.xml" work ml)
-					("https://masteringemacs.org/feed" emacs)
-					("https://protesilaos.com/master.xml" prot)
-					("http://feeds.arstechnica.com/arstechnica/index" news tech)
-					("https://www.sciencedaily.com/rss/top/technology.xml" news tech)
-					("https://planet.emacslife.com/zh/atom.xml" emacs)))
-	:bind
-	("C-c w" . elfeed)
-	("C-c W" . elfeed-other-frame)
-	(elfeed-search-mode-map
-	 ("U" . elfeed-update))
-	:hook
-	(elfeed-show-mode-hook . visual-line-mode))
+;; 	("C-c w" . elfeed)
+;; 	("C-c W" . elfeed-other-frame)
+;; 	(elfeed-search-mode-map
+;; 	 ("U" . elfeed-update))
+;; 	:hook
+;; 	(elfeed-show-mode-hook . visual-line-mode))
 
 (leaf bongo
   :straight t
@@ -524,13 +472,6 @@
 		("<C-return>" . prot/bongo-dired-insert)
 		("C-c SPC" . prot/bongo-dired-insert)
 		("C-c +" . prot/bongo-dired-make-playlist-file))))
-
-;; (leaf vterm
-;;   :straight t
-;;   :leaf-defer t
-;;   :config
-;;   (setq vterm-timer-delay 0.01)
-;;   (global-set-key (kbd "C-c v") 'vterm))
 
 (leaf eat
 	:straight (eat
@@ -565,21 +506,16 @@
 ;; 						 :host github
 ;; 						 :repo "tecosaur/Org.jl"))
 
-;; (leaf eglot
-;; 	:straight t
-;;   :leaf-defer
-;;   :hook
-;; 	((c-mode-hook c++-mode-hook) . eglot-ensure)
-;; 	;; (openfoam-mode-hook . eglot-ensure)
-;;   :config
-;;   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("ccls")))
-;; 	;; (add-to-list 'eglot-server-programs '((openfoam-code) . ))
-;; 	)
+(leaf eglot
+	:straight t
+	:hook
+	(julia-mode-hook . eglot-ensure)
+	;; ((c-mode-hook c++-mode-hook) . eglot-ensure)
+	)
 
-
-;; (leaf eglot-jl
-;; 	:straight t
-;; 	:init (eglot-jl-init))
+(leaf eglot-jl
+	:straight t
+	:init (eglot-jl-init))
 
 (leaf openfoam
 	:straight (openfoam
@@ -752,13 +688,6 @@
   :bind
   ("M-s" . avy-goto-char))
 
-;; (leaf ace-window
-;;   :straight t
-;;   :config
-;;   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
-;;   :bind
-;;   ("H-o" . ace-window))
-
 (leaf switch-window
 	:straight t
 	:config
@@ -792,13 +721,6 @@
   :hook
   (prog-mode-hook . rainbow-delimiters-mode))
 
-;; (leaf lambda-themes
-;;   :straight (lambda-themes :type git :host github :repo "Lambda-Emacs/lambda-themes")
-;;   :custom
-;;   (lambda-themes-set-italic-comments . t)
-;;   (lambda-themes-set-italic-keywords . t)
-;;   (lambda-themes-set-variable-pitch . nil))
-
 (leaf ef-themes
 	:straight t)
 (leaf standard-themes
@@ -807,31 +729,26 @@
 	;; (load-theme 'standard-dark)
 	(setq standard-themes-italic-constructs t))
 
-;; (leaf nix-mode
-;; 	:straight t
-;;   :mode "\\.nix\\'")
+(leaf nix-mode
+	:straight t
+	:leaf-defer
+  :mode "\\.nix\\'")
 
 ;; (leaf flycheck
 ;;   :straight t
 ;;   :blackout t
 ;;   :init (global-flycheck-mode))
 
-
-;; (leaf simple-modeline
+;; (leaf dashboard
 ;; 	:straight t
-;; 	:init (simple-modeline-mode)
-;; 	)
-
-(leaf dashboard
-	:straight t
-	:config
-	(dashboard-setup-startup-hook)
-	(setq dashboard-startup-banner "~/.emacs.d/media/sicp.png")
-	(setq dashboard-center-content t)
-	(setq dashboard-banner-logo-title "Welcome to Orbmacs")
-	(setq dashboard-items '((recents  . 5)
-													(bookmarks . 15)))
-	(setq dashboard-set-footer nil))
+;; 	:config
+;; 	(dashboard-setup-startup-hook)
+;; 	(setq dashboard-startup-banner "~/.emacs.d/media/sicp.png")
+;; 	(setq dashboard-center-content t)
+;; 	(setq dashboard-banner-logo-title "Welcome to Orbmacs")
+;; 	(setq dashboard-items '((recents  . 5)
+;; 													(bookmarks . 15)))
+;; 	(setq dashboard-set-footer nil))
 
 (leaf markdown-mode
 	:straight t)
@@ -844,6 +761,11 @@
 						 :type git
 						 :host github
 						 :repo "mhayashi1120/Emacs-wgrep"))
+
+(leaf eyebrowse
+	:straight t
+  :config
+  (eyebrowse-mode t))
 
 ;; (leaf modus-themes
 ;; 	:straight t)

@@ -31,7 +31,8 @@
 (setq org-refile-use-outline-path 'file)
 (setq org-outline-path-complete-in-steps nil)
 (setq org-refile-targets
-      '(("corkboard.org" :maxlevel . 1)))
+      '(("corkboard.org" :maxlevel . 1)
+				("agenda.org" :maxlevel . 1)))
 
 (setq org-agenda-hide-tags-regexp ".")
 
@@ -76,7 +77,7 @@ See also `org-save-all-org-buffers'"
           (agenda nil
                   ((org-agenda-entry-types '(:deadline))
                    (org-agenda-format-date "")
-                   (org-deadline-warning-days 7)
+                   (org-deadline-warning-days 14)
                    (org-agenda-skip-function
                     '(org-agenda-skip-entry-if 'notregexp "\\* NEXT"))
                    (org-agenda-overriding-header "\nDeadlines")))

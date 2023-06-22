@@ -1,4 +1,7 @@
 ;; (setq sentence-end-double-space nil)
+
+;; (setq org-hide-leading-stars t)
+
 (setq org-pretty-entities t)
 
 ;; (setq org-clock-sound "~/.emacs.d/media/digital_alarm.wav")

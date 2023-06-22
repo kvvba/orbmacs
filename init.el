@@ -38,12 +38,33 @@
 	;; (straight-use-package 'hydra)
   (leaf-keywords-init))
 
+(leaf org
+	:straight t
+	:blackout visual-line-mode
+  :config
+	(load-file "~/.emacs.d/config/org-config.el")
+	(load-file "~/.emacs.d/config/gtd.el")
+  :bind
+  ("C-c b" . org-cite-insert)
+	("C-M-<return>" . org-insert-subheading)
+  :hook
+  (org-mode-hook . (lambda ()
+										 (flyspell-mode)
+										 (blackout 'flyspell-mode)))
+  (org-mode-hook . visual-line-mode)
+  (org-mode-hook . (lambda ()
+										 (org-indent-mode)
+										 (blackout 'org-indent-mode)))
+  ;; (org-after-todo-statistics-hook . org-summary-todo)
+	)
+
 (leaf emacs
   :blackout auto-revert-mode
   :blackout (emacs-lisp-mode . "λ")
   :blackout abbrev-mode
   :init
-	;; (setq inhibit-startup-screen t)
+	(setq inhibit-startup-screen t)
+	(find-file "~/Documents/org/gtd/corkboard.org")
 	;; (list-bookmarks)
 	;; (switch-to-buffer "*Bookmark List*")
 	
@@ -285,45 +306,13 @@
 		'("S" . avy-kill-region)
 		'("V" . avy-kill-ring-save-region)))
 
-(leaf org
-	:straight t
-	:blackout visual-line-mode
-  :config
-	(load-file "~/.emacs.d/config/org-config.el")
-	(load-file "~/.emacs.d/config/gtd.el")
-  :bind
-  ("C-c b" . org-cite-insert)
-	("C-M-<return>" . org-insert-subheading)
-  :hook
-  (org-mode-hook . (lambda ()
-										 (flyspell-mode)
-										 (blackout 'flyspell-mode)))
-  (org-mode-hook . visual-line-mode)
-  (org-mode-hook . (lambda ()
-										 (org-indent-mode)
-										 (blackout 'org-indent-mode)))
-  ;; (org-after-todo-statistics-hook . org-summary-todo)
-	)
-
-(leaf org-modern
-	:straight t
-	:config
-	(setq org-modern-tag nil)
-	(setq org-modern-list
-        '((?+ . "•")
-          (?- . "–")))
-	(setq org-modern-star
-				'("*"))
-	(setq org-modern-radio-target nil)
-	(global-org-modern-mode))
-
-(leaf org-moden-indent
-	:straight (org-modern-indent
-						 :type git
-						 :host github
-						 :repo "jdtsmith/org-modern-indent")
-	:hook
-	(org-indent-mode-hook . org-modern-indent-mode))
+;; (leaf org-moden-indent
+;; 	:straight (org-modern-indent
+;; 						 :type git
+;; 						 :host github
+;; 						 :repo "jdtsmith/org-modern-indent")
+;; 	:hook
+;; 	(org-indent-mode-hook . org-modern-indent-mode))
 
 (leaf nov
 	:straight t
@@ -498,6 +487,9 @@
                 slime-company-after-completion 'slime-company-just-one-space))
 
 (leaf julia-mode
+	:straight t)
+
+(leaf julia-repl
 	:straight t)
 
 ;; (leaf leaf
@@ -734,6 +726,9 @@
 	:leaf-defer
   :mode "\\.nix\\'")
 
+(leaf fireplace
+	:straight t)
+
 ;; (leaf flycheck
 ;;   :straight t
 ;;   :blackout t
@@ -767,40 +762,9 @@
   :config
   (eyebrowse-mode t))
 
-;; (leaf modus-themes
-;; 	:straight t)
-
-;; (when (window-system)
-;;   (set-frame-font "Fira Code"))
-;; (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
-;;                (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
-;;                (36 . ".\\(?:>\\)")
-;;                (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
-;;                (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
-;;                (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
-;;                (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
-;;                (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
-;;                (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
-;;                (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
-;;                (48 . ".\\(?:x[a-zA-Z]\\)")
-;;                (58 . ".\\(?:::\\|[:=]\\)")
-;;                (59 . ".\\(?:;;\\|;\\)")
-;;                (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
-;;                (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
-;;                (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
-;;                (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
-;;                (91 . ".\\(?:]\\)")
-;;                (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
-;;                (94 . ".\\(?:=\\)")
-;;                (119 . ".\\(?:ww\\)")
-;;                (123 . ".\\(?:-\\)")
-;;                (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
-;;                (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)")
-;;                )
-;;              ))
-;;   (dolist (char-regexp alist)
-;;     (set-char-table-range composition-function-table (car char-regexp)
-;;                           `([,(cdr char-regexp) 0 font-shape-gstring]))))
+(leaf solaire-mode
+	:straight t
+	:init (solaire-global-mode 1))
 
 (provide 'init)
 ;;; init.el ends here

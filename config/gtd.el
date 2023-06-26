@@ -34,7 +34,7 @@
       '(("corkboard.org" :maxlevel . 1)
 				("agenda.org" :maxlevel . 1)))
 
-(setq org-agenda-hide-tags-regexp ".")
+;; (setq org-agenda-hide-tags-regexp ".")
 
 (defun gtd-save-org-buffers ()
   "Save `org-agenda-files' buffers without user confirmation.

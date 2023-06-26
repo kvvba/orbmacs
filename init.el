@@ -41,12 +41,13 @@
 (leaf org
 	:straight t
 	:blackout visual-line-mode
-  :config
+  :defer-config
 	(load-file "~/.emacs.d/config/org-config.el")
 	(load-file "~/.emacs.d/config/gtd.el")
   :bind
   ("C-c b" . org-cite-insert)
 	("C-M-<return>" . org-insert-subheading)
+	("C-M-S-<return>" . org-insert-todo-subheading)
   :hook
   (org-mode-hook . (lambda ()
 										 (flyspell-mode)
@@ -168,8 +169,8 @@
 	(display-time-mode)
 
 	(setq custom-safe-themes t)
-	(setq modus-themes-mode-line '(borderless))
-	(load-theme 'modus-operandi)
+	;; (setq modus-themes-mode-line '(borderless))
+	;; (load-theme 'modus-operandi)
 
 	(setq ediff-split-window-function 'split-window-sensibly)
 
@@ -193,16 +194,16 @@
 	("H-8" . calc))
 
 (leaf ispell
-	:config
+	:defer-config
 	(setq ispell-program-name "hunspell")
 	(setq ispell-dictionary "british"))
 
 (leaf flypsell
-	:config
+	:defer-config
 	(setq flyspell-default-dictionary "english"))
 
 (leaf eshell
-	:config
+	:defer-config
 	(load-file "~/.emacs.d/config/eshell-config.el")
   :bind
   ("<C-s-return>" . eshell-other-window)
@@ -231,7 +232,7 @@
          ;; Replace built in completion of sessions with `consult'
          ([remap detached-open-session] . detached-consult-session)
 				 )
-	:config
+	:defer-config
 	(defun detached-extra-project-compile ()
     "Run `compile' in the project root."
     (declare (interactive-only compile))
@@ -258,7 +259,6 @@
 	 ("H-n" . dired-next-subdir)
 	 ("H-p" . dired-prev-subdir)
 	 ("C-x C-j" . dired-jump)
-	 ("H-f" . find-name-dired)
 	 ("W" . wdired-change-to-wdired-mode)
 	 ("r" . rgrep))
 	:hook
@@ -267,13 +267,6 @@
 (leaf dired-hacks-utils
 	:straight t
 	:after dired)
-
-(leaf dired-narrow
-  :straight t
-  :after dired
-  :bind ((dired-mode-map
-					:package dired
-					("/" . dired-narrow))))
 
 (leaf all-the-icons
 	:straight t)
@@ -433,7 +426,7 @@
 (leaf bongo
   :straight t
   :leaf-defer t
-  :config (load-file "~/.emacs.d/config/bongo-config.el")
+  :defer-config (load-file "~/.emacs.d/config/bongo-config.el")
   :bind
   (("<C-XF86AudioPlay>" . bongo-pause/resume)
    ("<C-XF86AudioNext>" . bongo-next)
@@ -483,7 +476,7 @@
   :straight t
   :leaf-defer t
   :after (slime company)
-  :config (setq slime-company-completion 'fuzzy
+  :defer-config (setq slime-company-completion 'fuzzy
                 slime-company-after-completion 'slime-company-just-one-space))
 
 (leaf julia-mode
@@ -595,7 +588,7 @@
 
 (leaf easy-jekyll
 	:straight t
-	:config
+	:defer-config
 	(setq easy-jekyll-basedir "~/Documents/org/blog/")
 	(setq easy-jekyll-url "https://kvvba.github.io/")
 	:bind
@@ -610,9 +603,9 @@
   :straight t
   :bind
   ("H-s" . consult-line)
-  ("M-g g" . consult-goto-line)
   ("C-x r b" . consult-bookmark)
-  ("H-r" . consult-ripgrep))
+  ("H-r" . consult-ripgrep)
+	("H-f" . consult-find))
 
 (leaf embark
   :straight t
@@ -714,12 +707,14 @@
   (prog-mode-hook . rainbow-delimiters-mode))
 
 (leaf ef-themes
-	:straight t)
-(leaf standard-themes
 	:straight t
-	:config
-	;; (load-theme 'standard-dark)
-	(setq standard-themes-italic-constructs t))
+	:init
+	(load-theme 'ef-spring))
+
+;; (leaf standard-themes
+;; 	:straight t
+;; 	:config
+;; 	(setq standard-themes-italic-constructs t))
 
 (leaf nix-mode
 	:straight t
@@ -748,8 +743,8 @@
 (leaf markdown-mode
 	:straight t)
 
-(leaf olivetti
-	:straight t)
+;; (leaf olivetti
+;; 	:straight t)
 
 (leaf Emacs-wgrep
 	:straight (Emacs-wgrep
@@ -761,10 +756,6 @@
 	:straight t
   :config
   (eyebrowse-mode t))
-
-(leaf solaire-mode
-	:straight t
-	:init (solaire-global-mode 1))
 
 (provide 'init)
 ;;; init.el ends here

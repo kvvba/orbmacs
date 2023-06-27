@@ -38,7 +38,6 @@
 ;; (setq org-startup-with-inline-images t)
 
 (add-to-list 'org-modules 'org-habit)
-(setq org-habit-show-all-today t)
 
 (provide 'org-config.el)
 ;;; org-config.el ends here

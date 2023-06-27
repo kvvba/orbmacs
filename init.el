@@ -44,6 +44,7 @@
   :defer-config
 	(load-file "~/.emacs.d/config/org-config.el")
 	(load-file "~/.emacs.d/config/gtd.el")
+	(load-file "~/.emacs.d/config/org-books.el")
   :bind
   ("C-c b" . org-cite-insert)
 	("C-M-<return>" . org-insert-subheading)

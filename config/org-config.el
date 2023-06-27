@@ -37,5 +37,10 @@
 
 ;; (setq org-startup-with-inline-images t)
 
+(defun org-refile-book ()
+	(interactive)
+	(let ((org-refile-targets '(("books.org" :maxlevel . 1))))
+		(org-refile)))
+
 (provide 'org-config.el)
 ;;; org-config.el ends here

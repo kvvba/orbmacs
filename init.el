@@ -41,7 +41,7 @@
 (leaf org
 	:straight t
 	:blackout visual-line-mode
-  :defer-config
+  :config
 	(load-file "~/.emacs.d/config/org-config.el")
 	(load-file "~/.emacs.d/config/gtd.el")
 	(load-file "~/.emacs.d/config/org-books.el")
@@ -261,7 +261,8 @@
 	 ("H-p" . dired-prev-subdir)
 	 ("C-x C-j" . dired-jump)
 	 ("W" . wdired-change-to-wdired-mode)
-	 ("r" . rgrep))
+	 ("r" . rgrep)
+	 ("/" . jakub/dired-narrow))
 	:hook
 	(dired-mode-hook . dired-hide-details-mode))
 

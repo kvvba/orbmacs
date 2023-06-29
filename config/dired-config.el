@@ -7,6 +7,13 @@
 (eval-after-load "dired-aux"
 	'(add-to-list 'dired-compress-file-suffixes
 								'("\\.zip\\'" ".zip" "unzip")))
+
+(defun jakub/dired-narrow ()
+	(interactive)
+	(dired-mark-files-regexp (read-string "Search: "))
+	(dired-toggle-marks)
+	(dired-do-kill-lines))
+
 (setq delete-by-moving-to-trash t)
 (setq dired-dwim-target t)
 (provide 'dired-config.el)

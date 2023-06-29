@@ -93,6 +93,11 @@ See also `org-save-all-org-buffers'"
         (tags   . " %i %-12:c")
         (search . " %i %-12:c")))
 
+(define-key global-map (kbd "C-c r") 'org-refile)
+(setq org-refile-targets
+      '(("corkboard.org" :maxlevel . 1)
+				("agenda.org" :maxlevel . 1)))
+
 ;; mu4e
 ;; (defun org-capture-mail ()
 ;; 	(interactive)

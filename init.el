@@ -179,20 +179,14 @@
   ;; Hitting suspend frame by accident is annoying me
   ("C-z" . nil)
   ("C-x C-z" . nil)
-  ("H-b" . consult-buffer)
-  ("H-B" . consult-buffer-other-window)
-	("H-h" . consult-outline)
-	("H-0" . delete-window)
-	("H-1" . delete-other-windows)
+  ("C-c b" . consult-buffer)
+  ("C-c B" . consult-buffer-other-window)
+	("C-c o" . consult-outline)
 	("M-[" . backward-paragraph)
 	("M-]" . forward-paragraph)
 	("C-x C-b" . ibuffer)
   :hook
   (emacs-startup-hook . startup/revert-file-name-handler-alist))
-
-(leaf calc
-	:bind
-	("H-8" . calc))
 
 (leaf ispell
 	:defer-config
@@ -254,11 +248,8 @@
   :defer-config
 	(load-file "~/.emacs.d/config/dired-config.el")
   :bind
-  ("H-d" . dired)
   (dired-mode-map
    ("K" . dired-kill-subdir)
-	 ("H-n" . dired-next-subdir)
-	 ("H-p" . dired-prev-subdir)
 	 ("C-x C-j" . dired-jump)
 	 ("W" . wdired-change-to-wdired-mode)
 	 ("r" . rgrep)
@@ -604,10 +595,10 @@
 (leaf consult
   :straight t
   :bind
-  ("H-s" . consult-line)
+  ("C-c s" . consult-line)
   ("C-x r b" . consult-bookmark)
-  ("H-r" . consult-ripgrep)
-	("H-f" . consult-find))
+  ("C-c R" . consult-ripgrep)
+	("C-c f" . consult-find))
 
 (leaf embark
   :straight t
@@ -680,7 +671,7 @@
 	:config
 	(setq switch-window-shortcut-style 'qwerty)
 	:bind
-	("H-o" . switch-window))
+	("C-x o" . switch-window))
 
 ;; (leaf async
 ;;   :straight t

@@ -171,7 +171,7 @@
 
 	(setq custom-safe-themes t)
 	(setq modus-themes-mode-line '(borderless))
-	;; (load-theme 'modus-operandi)
+	(load-theme 'modus-operandi)
 
 	(setq ediff-split-window-function 'split-window-sensibly)
 

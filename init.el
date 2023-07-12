@@ -170,7 +170,7 @@
 	(display-time-mode)
 
 	(setq custom-safe-themes t)
-	;; (setq modus-themes-mode-line '(borderless))
+	(setq modus-themes-mode-line '(borderless))
 	;; (load-theme 'modus-operandi)
 
 	(setq ediff-split-window-function 'split-window-sensibly)
@@ -179,8 +179,8 @@
   ;; Hitting suspend frame by accident is annoying me
   ("C-z" . nil)
   ("C-x C-z" . nil)
-  ("C-c b" . consult-buffer)
-  ("C-c B" . consult-buffer-other-window)
+  ("C-x b" . consult-buffer)
+  ("C-x B" . consult-buffer-other-window)
 	("C-c o" . consult-outline)
 	("M-[" . backward-paragraph)
 	("M-]" . forward-paragraph)
@@ -384,37 +384,37 @@
 ;;   (mu4e-alert-enable-mode-line-display)
 ;;   (mu4e-alert-enable-notifications))
 
-;; (leaf elfeed
-;; 	:straight t
-;; 	:init
-;; 	(defun elfeed-other-frame ()
-;; 		"Opens elfeed in a new frame."
-;; 		(interactive)
-;; 		(switch-to-buffer-other-frame "*elfeed-search*")
-;; 		(elfeed))
-;; 	:config
-;; 	(setq elfeed-feeds
-;; 				'(("https://rss.sciencedirect.com/publication/science/03019322" work fluids)
-;; 					("https://rss.sciencedirect.com/publication/science/13594311" work fluids)
-;; 					("https://rss.sciencedirect.com/publication/science/0142727X" work fluids)
-;; 					("https://rss.sciencedirect.com/publication/science/00457930" work fluids)
-;; 					("https://www.mdpi.com/rss/journal/fluids" work fluids)
-;; 					("https://www.cambridge.org/core/rss/product/id/1F51BCFAA50101CAF5CB9A20F8DEA3E4" work fluids)
-;; 					("https://www.annualreviews.org/r/fluid_rss" work fluids)
-;; 					("https://onlinelibrary.wiley.com/journal/10970363#" work fluids)
-;; 					("https://juliacomputing.com/feed.xml" work ml)
-;; 					("https://masteringemacs.org/feed" emacs)
-;; 					("https://protesilaos.com/master.xml" prot)
-;; 					("http://feeds.arstechnica.com/arstechnica/index" news tech)
-;; 					("https://www.sciencedaily.com/rss/top/technology.xml" news tech)
-;; 					("https://planet.emacslife.com/zh/atom.xml" emacs)))
-;; 	:bind
-;; 	("C-c w" . elfeed)
-;; 	("C-c W" . elfeed-other-frame)
-;; 	(elfeed-search-mode-map
-;; 	 ("U" . elfeed-update))
-;; 	:hook
-;; 	(elfeed-show-mode-hook . visual-line-mode))
+(leaf elfeed
+	:straight t
+	:init
+	(defun elfeed-other-frame ()
+		"Opens elfeed in a new frame."
+		(interactive)
+		(switch-to-buffer-other-frame "*elfeed-search*")
+		(elfeed))
+	:config
+	(setq elfeed-feeds
+				'(("https://rss.sciencedirect.com/publication/science/03019322" work fluids)
+					;; ("https://rss.sciencedirect.com/publication/science/13594311" work fluids)
+					("https://rss.sciencedirect.com/publication/science/0142727X" work fluids)
+					("https://rss.sciencedirect.com/publication/science/00457930" work fluids)
+					("https://www.mdpi.com/rss/journal/fluids" work fluids)
+					("https://www.cambridge.org/core/rss/product/id/1F51BCFAA50101CAF5CB9A20F8DEA3E4" work fluids)
+					("https://www.annualreviews.org/r/fluid_rss" work fluids)
+					("https://onlinelibrary.wiley.com/journal/10970363#" work fluids)
+					("https://juliacomputing.com/feed.xml" work prog)
+					("https://masteringemacs.org/feed" emacs)
+					("https://protesilaos.com/master.xml" prot)
+					("http://feeds.arstechnica.com/arstechnica/index" news tech)
+					("https://www.sciencedaily.com/rss/top/technology.xml" news tech)
+					("https://planet.emacslife.com/zh/atom.xml" emacs)))
+	:bind
+	;; ("C-c w" . elfeed)
+	;; ("C-c W" . elfeed-other-frame)
+	(elfeed-search-mode-map
+	 ("U" . elfeed-update))
+	:hook
+	(elfeed-show-mode-hook . visual-line-mode))
 
 (leaf bongo
   :straight t
@@ -595,7 +595,7 @@
 (leaf consult
   :straight t
   :bind
-  ("C-c s" . consult-line)
+  ("C-s" . consult-line)
   ("C-x r b" . consult-bookmark)
   ("C-c R" . consult-ripgrep)
 	("C-c f" . consult-find))
@@ -699,10 +699,10 @@
   :hook
   (prog-mode-hook . rainbow-delimiters-mode))
 
-(leaf ef-themes
-	:straight t
-	:init
-	(load-theme 'ef-spring))
+;; (leaf ef-themes
+;; 	:straight t
+;; 	:init
+;; 	(load-theme 'ef-light))
 
 ;; (leaf standard-themes
 ;; 	:straight t
@@ -749,6 +749,13 @@
 	:straight t
   :config
   (eyebrowse-mode t))
+
+(leaf auto-dark
+	:straight t
+	:init
+	(setq auto-dark-light-theme 'modus-operandi)
+	(setq auto-dark-dark-theme 'modus-vivendi)
+	(auto-dark-mode 1))
 
 (provide 'init)
 ;;; init.el ends here

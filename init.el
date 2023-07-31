@@ -535,6 +535,7 @@
   (setq denote-directory "~/Documents/org/notes/")
   (setq denote-dired-directories
 				(list denote-directory "~/Documents/org/journal/"))
+	(denote-rename-buffer-mode 1)
   :config
 	(defun my-denote-journal ()
 		"Create an entry tagged 'journal' with the date as its title."

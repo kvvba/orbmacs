@@ -16,5 +16,11 @@
 
 (setq delete-by-moving-to-trash t)
 (setq dired-dwim-target t)
+
+(defun jakub/dired-really-delete ()
+	(interactive)
+	(let ((delete-by-moving-to-trash nil))
+		(dired-do-delete)))
+
 (provide 'dired-config.el)
 ;;; dired-config.el ends here

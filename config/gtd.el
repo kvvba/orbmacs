@@ -20,7 +20,10 @@
 															 "* %? :event:\nEntered on: %U")
 															("d" "deadline" entry
 															 (file+headline "gtd/agenda.org" "Future")
-															 "* NEXT %? :deadline:\nEntered on: %U")))
+															 "* NEXT %? :deadline:\nEntered on: %U")
+															("r" "reminder" entry
+															 (file+headline "gtd/reminders.org" "Future")
+															 "* TODO %? :reminder:\nEntered on: %U")))
 
 ;; Keybinds
 (define-key global-map (kbd "C-c a") 'org-agenda)

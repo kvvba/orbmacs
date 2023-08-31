@@ -190,7 +190,11 @@
 (leaf ispell
 	:defer-config
 	(setq ispell-program-name "hunspell")
+<<<<<<< HEAD
 	(setq ispell-dictionary "en_GB")
+=======
+	(setq ispell-dictionary "british")
+>>>>>>> 74951e2 (changes)
 	)
 
 (leaf flypsell
@@ -476,6 +480,13 @@
 (leaf julia-mode
 	:straight t)
 
+;; (leaf tree-sitter
+;; 	:straight t
+;; 	:init (global-tree-sitter-mode))
+
+;; (leaf tree-sitter-langs
+;; 	:straight t)
+
 (leaf julia-repl
 	:straight t)
 
@@ -505,15 +516,23 @@
 	;; (c++-mode-hook . openfoam-c++-mode)
 	)
 
+(leaf gmsh-mode
+	:straight t)
+
 (leaf company
   :straight t
   :blackout t
   :custom
-  (company-idle-delay . 0.25) ;; how long to wait until popup
+  (company-idle-delay . 0) ;; how long to wait until popup
   ;; (company-begin-commands nil) ;; uncomment to disable popup
   (global-company-mode . t)
   :config
   (add-to-list 'company-backends 'company-capf)
+	;; (defun complete-or-indent ()
+  ;;   (interactive)
+  ;;   (if (company-manual-begin)
+  ;;       (company-complete-common)
+  ;;     (indent-according-to-mode)))
   :bind (company-active-map
 				 ("C-n" . company-select-next)
 				 ("C-p" . company-select-previous)
@@ -557,6 +576,7 @@
 	;; (denote-dired-mode-hook . dired-hide-details-mode)
 	(denote-dired-mode-hook . meow-motion-mode)
   ;; (find-file-hook . denote-link-buttonize-buffer)
+	(org-mode-hook . denote-rename-buffer-mode)
   :bind
   ("C-c n i" . denote-link)
   ("C-c n I" . denote-link-add-links)
@@ -751,7 +771,10 @@
 	:straight (Emacs-wgrep
 						 :type git
 						 :host github
-						 :repo "mhayashi1120/Emacs-wgrep"))
+						 :repo "mhayashi1120/Emacs-wgrep")
+	:config
+	(setq wgrep-auto-save-buffer t)
+	(setq wgrep-enable-key "r"))
 
 (leaf eyebrowse
 	:straight t

@@ -44,7 +44,6 @@
   :config
 	(load-file "~/.emacs.d/config/org-config.el")
 	(load-file "~/.emacs.d/config/gtd.el")
-	(load-file "~/.emacs.d/config/org-books.el")
   :bind
   ("C-c b" . org-cite-insert)
 	("C-M-<return>" . org-insert-subheading)
@@ -153,8 +152,8 @@
   (global-hl-line-mode t)
 
   (set-face-attribute 'default nil
-											:family "FiraCode"
-											:height 100
+											:family "Source Code Pro"
+											;; :height 100
 											:weight 'normal
 											:width 'normal
 											)
@@ -191,11 +190,13 @@
 (leaf ispell
 	:defer-config
 	(setq ispell-program-name "hunspell")
-	(setq ispell-dictionary "british"))
+	(setq ispell-dictionary "en_GB")
+	)
 
 (leaf flypsell
 	:defer-config
-	(setq flyspell-default-dictionary "english"))
+	(setq flyspell-default-dictionary "en_GB")
+	)
 
 (leaf eshell
 	:defer-config
@@ -354,8 +355,8 @@
 						 :host github
 						 :repo "pprevos/citar-denote")
 	:blackout citar-denote
-	:hook
-	(org-mode-hook . citar-denote-mode)
+	:init
+	(citar-denote-mode 1)
 	:bind
 	("C-c n c n" . citar-create-note)
 	("C-c n c o" . citar-open-notes)
@@ -546,6 +547,11 @@
 			 '("journal")))) ; multiple keywords are a list of strings: '("one" "two")
 	(setq denote-backlinks-show-context t)
 	(setq denote-known-keywords nil)
+	(defun dennote-meeting-minutes ()
+		(interactive)
+		 (denote
+			(format-time-string "Progress meeting %F")
+			'("meeting")))
   :hook
   (dired-mode-hook . denote-dired-mode-in-directories)
 	;; (denote-dired-mode-hook . dired-hide-details-mode)
@@ -556,6 +562,7 @@
   ("C-c n I" . denote-link-add-links)
   ("C-c n j" . my-denote-journal)
   ("C-c n b" . denote-link-backlinks)
+	("C-c n m" . denote-meeting-minutes)
 	("C-c n n" . denote)
 	("C-c n d" . (lambda () (interactive) (dired denote-directory))))
 

@@ -190,11 +190,7 @@
 (leaf ispell
 	:defer-config
 	(setq ispell-program-name "hunspell")
-<<<<<<< HEAD
 	(setq ispell-dictionary "en_GB")
-=======
-	(setq ispell-dictionary "british")
->>>>>>> 74951e2 (changes)
 	)
 
 (leaf flypsell

@@ -169,8 +169,8 @@
 	(display-time-mode)
 
 	(setq custom-safe-themes t)
-	(setq modus-themes-mode-line '(borderless))
-	(load-theme 'modus-operandi)
+	;; (setq modus-themes-mode-line '(borderless))
+	;; (load-theme 'modus-operandi)
 
 	(setq ediff-split-window-function 'split-window-sensibly)
 
@@ -246,7 +246,7 @@
   (detached-terminal-data-command . system-type))
 
 (leaf dired
-  :defer-config
+  :config
 	(load-file "~/.emacs.d/config/dired-config.el")
   :bind
   (dired-mode-map
@@ -553,6 +553,11 @@
 				(list denote-directory "~/Documents/org/journal/"))
 	(denote-rename-buffer-mode 1)
   :config
+	(defun denote-meeting-minutes ()
+		(interactive)
+		(denote
+		 (format-time-string "Progress meeting %F")
+		 '("meeting")))
 	(defun my-denote-journal ()
 		"Create an entry tagged 'journal' with the date as its title."
 		(interactive)
@@ -562,11 +567,6 @@
 			 '("journal")))) ; multiple keywords are a list of strings: '("one" "two")
 	(setq denote-backlinks-show-context t)
 	(setq denote-known-keywords nil)
-	(defun dennote-meeting-minutes ()
-		(interactive)
-		 (denote
-			(format-time-string "Progress meeting %F")
-			'("meeting")))
   :hook
   (dired-mode-hook . denote-dired-mode-in-directories)
 	;; (denote-dired-mode-hook . dired-hide-details-mode)
@@ -723,10 +723,11 @@
   :hook
   (prog-mode-hook . rainbow-delimiters-mode))
 
-;; (leaf ef-themes
-;; 	:straight t
-;; 	:init
-;; 	(load-theme 'ef-light))
+(leaf ef-themes
+	:straight t
+	:init
+	;; (load-theme 'ef-summer)
+	)
 
 ;; (leaf standard-themes
 ;; 	:straight t
@@ -780,8 +781,8 @@
 (leaf auto-dark
 	:straight t
 	:init
-	(setq auto-dark-light-theme 'modus-operandi)
-	(setq auto-dark-dark-theme 'modus-vivendi)
+	(setq auto-dark-light-theme 'ef-summer)
+	(setq auto-dark-dark-theme 'ef-autumn)
 	(auto-dark-mode 1))
 
 (provide 'init)

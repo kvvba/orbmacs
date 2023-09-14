@@ -338,7 +338,8 @@
   :straight t
   :after org
   :custom
-  (org-cite-global-bibliography . '("~/Documents/org/papers/references.bib"))
+  (org-cite-global-bibliography . '("~/Documents/org/papers/references.bib"
+																		"~/Documents/references.bib"))
   (org-cite-insert-processor . 'citar)
   (org-cite-follow-processor . 'citar)
   (org-cite-activate-processor . 'citar)

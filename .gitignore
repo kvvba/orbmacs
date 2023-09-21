@@ -10,3 +10,5 @@
 /tramp
 /transient/
 /config/openfoam-config.el
+/org-persist/
+/url/

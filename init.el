@@ -782,7 +782,7 @@
 (leaf auto-dark
 	:straight t
 	:init
-	(setq auto-dark-light-theme 'ef-summer)
+	(setq auto-dark-light-theme 'ef-day)
 	(setq auto-dark-dark-theme 'ef-autumn)
 	(auto-dark-mode 1))
 

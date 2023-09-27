@@ -258,9 +258,9 @@
 	:hook
 	(dired-mode-hook . dired-hide-details-mode))
 
-(leaf dired-hacks-utils
-	:straight t
-	:after dired)
+;; (leaf dired-hacks-utils
+;; 	:straight t
+;; 	:after dired)
 
 (leaf all-the-icons
 	:straight t)
@@ -604,13 +604,13 @@
   ("C-c n r" . jakub/consult-notes-ripgrep)
   ("C-c n f" . consult-notes))
 
-(leaf easy-jekyll
-	:straight t
-	:defer-config
-	(setq easy-jekyll-basedir "~/Documents/org/blog/")
-	(setq easy-jekyll-url "https://kvvba.github.io/")
-	:bind
-	("C-c j" . easy-jekyll))
+;; (leaf easy-jekyll
+;; 	:straight t
+;; 	:defer-config
+;; 	(setq easy-jekyll-basedir "~/Documents/org/blog/")
+;; 	(setq easy-jekyll-url "https://kvvba.github.io/")
+;; 	:bind
+;; 	("C-c j" . easy-jekyll))
 
 (leaf vertico
   :straight t

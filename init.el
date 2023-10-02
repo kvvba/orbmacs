@@ -724,10 +724,21 @@
   :hook
   (prog-mode-hook . rainbow-delimiters-mode))
 
-(leaf ef-themes
-	:straight t
-	:init
+;; (leaf ef-themes
+;; 	:straight t
+;; 	:init
 	;; (load-theme 'ef-summer)
+	;; )
+
+(leaf lambda-themes
+  :straight (lambda-themes :type git :host github :repo "lambda-emacs/lambda-themes") 
+  :custom
+  (lambda-themes-set-italic-comments . t)
+  (lambda-themes-set-italic-keywords . t)
+  (lambda-themes-set-variable-pitch . nil) 
+  :config
+  ;; load preferred theme 
+  ;; (load-theme 'lambda-light)
 	)
 
 ;; (leaf standard-themes
@@ -782,8 +793,8 @@
 (leaf auto-dark
 	:straight t
 	:init
-	(setq auto-dark-light-theme 'ef-day)
-	(setq auto-dark-dark-theme 'ef-autumn)
+	(setq auto-dark-light-theme 'lambda-light-faded)
+	(setq auto-dark-dark-theme 'lambda-dark-faded)
 	(auto-dark-mode 1))
 
 (provide 'init)

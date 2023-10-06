@@ -730,21 +730,21 @@
 	;; (load-theme 'ef-summer)
 	;; )
 
-(leaf lambda-themes
-  :straight (lambda-themes :type git :host github :repo "lambda-emacs/lambda-themes") 
-  :custom
-  (lambda-themes-set-italic-comments . t)
-  (lambda-themes-set-italic-keywords . t)
-  (lambda-themes-set-variable-pitch . nil) 
-  :config
+;; (leaf lambda-themes
+;;   :straight (lambda-themes :type git :host github :repo "lambda-emacs/lambda-themes") 
+;;   :custom
+;;   (lambda-themes-set-italic-comments . t)
+;;   (lambda-themes-set-italic-keywords . t)
+;;   (lambda-themes-set-variable-pitch . nil) 
+;;   :config
   ;; load preferred theme 
   ;; (load-theme 'lambda-light)
-	)
+	;; )
 
-;; (leaf standard-themes
-;; 	:straight t
-;; 	:config
-;; 	(setq standard-themes-italic-constructs t))
+(leaf standard-themes
+	:straight t
+	:config
+	(setq standard-themes-italic-constructs t))
 
 (leaf nix-mode
 	:straight t
@@ -793,8 +793,8 @@
 (leaf auto-dark
 	:straight t
 	:init
-	(setq auto-dark-light-theme 'lambda-light-faded)
-	(setq auto-dark-dark-theme 'lambda-dark-faded)
+	(setq auto-dark-light-theme 'standard-light)
+	(setq auto-dark-dark-theme 'standard-dark)
 	(auto-dark-mode 1))
 
 (provide 'init)

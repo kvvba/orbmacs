@@ -169,7 +169,7 @@
 	(display-time-mode)
 
 	(setq custom-safe-themes t)
-	;; (setq modus-themes-mode-line '(borderless))
+	(setq modus-themes-mode-line '(borderless))
 	;; (load-theme 'modus-operandi)
 
 	(setq ediff-split-window-function 'split-window-sensibly)
@@ -724,11 +724,8 @@
   :hook
   (prog-mode-hook . rainbow-delimiters-mode))
 
-;; (leaf ef-themes
-;; 	:straight t
-;; 	:init
-	;; (load-theme 'ef-summer)
-	;; )
+(leaf ef-themes
+	:straight t)
 
 ;; (leaf lambda-themes
 ;;   :straight (lambda-themes :type git :host github :repo "lambda-emacs/lambda-themes") 
@@ -793,8 +790,8 @@
 (leaf auto-dark
 	:straight t
 	:init
-	(setq auto-dark-light-theme 'standard-light)
-	(setq auto-dark-dark-theme 'standard-dark)
+	(setq auto-dark-light-theme 'modus-operandi)
+	(setq auto-dark-dark-theme 'modus-vivendi)
 	(auto-dark-mode 1))
 
 (provide 'init)

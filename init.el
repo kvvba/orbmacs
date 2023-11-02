@@ -166,7 +166,7 @@
   (setq enable-recursive-minibuffers t)
 	(setq log-warning-minimum-level :error)
 	(setq sentence-end-double-space nil)
-	(display-time-mode)
+	;; (display-time-mode)
 
 	(setq custom-safe-themes t)
 	(setq modus-themes-mode-line '(borderless))
@@ -386,69 +386,69 @@
 ;;   (mu4e-alert-enable-mode-line-display)
 ;;   (mu4e-alert-enable-notifications))
 
-(leaf elfeed
-	:straight t
-	:init
-	(defun elfeed-other-frame ()
-		"Opens elfeed in a new frame."
-		(interactive)
-		(switch-to-buffer-other-frame "*elfeed-search*")
-		(elfeed))
-	:config
-	(setq elfeed-feeds
-				'(("https://rss.sciencedirect.com/publication/science/03019322" work fluids)
-					;; ("https://rss.sciencedirect.com/publication/science/13594311" work fluids)
-					("https://rss.sciencedirect.com/publication/science/0142727X" work fluids)
-					("https://rss.sciencedirect.com/publication/science/00457930" work fluids)
-					("https://www.mdpi.com/rss/journal/fluids" work fluids)
-					("https://www.cambridge.org/core/rss/product/id/1F51BCFAA50101CAF5CB9A20F8DEA3E4" work fluids)
-					("https://www.annualreviews.org/r/fluid_rss" work fluids)
-					("https://onlinelibrary.wiley.com/journal/10970363#" work fluids)
-					("https://juliacomputing.com/feed.xml" work prog)
-					("https://masteringemacs.org/feed" emacs)
-					("https://protesilaos.com/master.xml" prot)
-					("http://feeds.arstechnica.com/arstechnica/index" news tech)
-					("https://www.sciencedaily.com/rss/top/technology.xml" news tech)
-					("https://planet.emacslife.com/zh/atom.xml" emacs)))
-	:bind
-	;; ("C-c w" . elfeed)
-	;; ("C-c W" . elfeed-other-frame)
-	(elfeed-search-mode-map
-	 ("U" . elfeed-update))
-	:hook
-	(elfeed-show-mode-hook . visual-line-mode))
+;; (leaf elfeed
+;; 	:straight t
+;; 	:init
+;; 	(defun elfeed-other-frame ()
+;; 		"Opens elfeed in a new frame."
+;; 		(interactive)
+;; 		(switch-to-buffer-other-frame "*elfeed-search*")
+;; 		(elfeed))
+;; 	:config
+;; 	(setq elfeed-feeds
+;; 				'(("https://rss.sciencedirect.com/publication/science/03019322" work fluids)
+;; 					;; ("https://rss.sciencedirect.com/publication/science/13594311" work fluids)
+;; 					("https://rss.sciencedirect.com/publication/science/0142727X" work fluids)
+;; 					("https://rss.sciencedirect.com/publication/science/00457930" work fluids)
+;; 					("https://www.mdpi.com/rss/journal/fluids" work fluids)
+;; 					("https://www.cambridge.org/core/rss/product/id/1F51BCFAA50101CAF5CB9A20F8DEA3E4" work fluids)
+;; 					("https://www.annualreviews.org/r/fluid_rss" work fluids)
+;; 					("https://onlinelibrary.wiley.com/journal/10970363#" work fluids)
+;; 					("https://juliacomputing.com/feed.xml" work prog)
+;; 					("https://masteringemacs.org/feed" emacs)
+;; 					("https://protesilaos.com/master.xml" prot)
+;; 					("http://feeds.arstechnica.com/arstechnica/index" news tech)
+;; 					("https://www.sciencedaily.com/rss/top/technology.xml" news tech)
+;; 					("https://planet.emacslife.com/zh/atom.xml" emacs)))
+;; 	:bind
+;; 	;; ("C-c w" . elfeed)
+;; 	;; ("C-c W" . elfeed-other-frame)
+;; 	(elfeed-search-mode-map
+;; 	 ("U" . elfeed-update))
+;; 	:hook
+;; 	(elfeed-show-mode-hook . visual-line-mode))
 
-(leaf bongo
-  :straight t
-  :leaf-defer t
-  :defer-config (load-file "~/.emacs.d/config/bongo-config.el")
-  :bind
-  (("<C-XF86AudioPlay>" . bongo-pause/resume)
-   ("<C-XF86AudioNext>" . bongo-next)
-   ("<C-XF86AudioPrev>" . bongo-previous)
-   ("<M-XF86AudioPlay>" . bongo-show)
-   ("<S-XF86AudioNext>" . bongo-seek-forward-10)
-   ("<S-XF86AudioPrev>" . bongo-seek-backward-10)
-   ("C-c p"             . bongo)
-   (bongo-playlist-mode-map
-		("n" . bongo-next-object)
-		("p" . bongo-previous-object)
-		("M-n" . prot/bongo-paylist-section-next)
-		("M-p" . prot/bongo-paylist-section-previous)
-		("M-h" . prot/bongo-playlist-mark-section)
-		("M-d" . prot/bongo-playlist-kill-section)
-		("g" . prot/bongo-playlist-reset)
-		("D" . prot/bongo-playlist-terminate)
-		("r" . prot/bongo-playlist-random-toggle)
-		("R" . bongo-rename-line)
-		("d" . bongo-dired-line)       ; Jump to dir of file at point
-		("J" . dired-jump)             ; Jump to library buffer
-		("i" . prot/bongo-playlist-insert-playlist-file)
-		("I" . bongo-insert-special))
-   (bongo-dired-library-mode-map
-		("<C-return>" . prot/bongo-dired-insert)
-		("C-c SPC" . prot/bongo-dired-insert)
-		("C-c +" . prot/bongo-dired-make-playlist-file))))
+;; (leaf bongo
+;;   :straight t
+;;   :leaf-defer t
+;;   :defer-config (load-file "~/.emacs.d/config/bongo-config.el")
+;;   :bind
+;;   (("<C-XF86AudioPlay>" . bongo-pause/resume)
+;;    ("<C-XF86AudioNext>" . bongo-next)
+;;    ("<C-XF86AudioPrev>" . bongo-previous)
+;;    ("<M-XF86AudioPlay>" . bongo-show)
+;;    ("<S-XF86AudioNext>" . bongo-seek-forward-10)
+;;    ("<S-XF86AudioPrev>" . bongo-seek-backward-10)
+;;    ("C-c p"             . bongo)
+;;    (bongo-playlist-mode-map
+;; 		("n" . bongo-next-object)
+;; 		("p" . bongo-previous-object)
+;; 		("M-n" . prot/bongo-paylist-section-next)
+;; 		("M-p" . prot/bongo-paylist-section-previous)
+;; 		("M-h" . prot/bongo-playlist-mark-section)
+;; 		("M-d" . prot/bongo-playlist-kill-section)
+;; 		("g" . prot/bongo-playlist-reset)
+;; 		("D" . prot/bongo-playlist-terminate)
+;; 		("r" . prot/bongo-playlist-random-toggle)
+;; 		("R" . bongo-rename-line)
+;; 		("d" . bongo-dired-line)       ; Jump to dir of file at point
+;; 		("J" . dired-jump)             ; Jump to library buffer
+;; 		("i" . prot/bongo-playlist-insert-playlist-file)
+;; 		("I" . bongo-insert-special))
+;;    (bongo-dired-library-mode-map
+;; 		("<C-return>" . prot/bongo-dired-insert)
+;; 		("C-c SPC" . prot/bongo-dired-insert)
+;; 		("C-c +" . prot/bongo-dired-make-playlist-file))))
 
 (leaf eat
 	:straight (eat
@@ -493,16 +493,17 @@
 ;; 						 :host github
 ;; 						 :repo "tecosaur/Org.jl"))
 
-(leaf eglot
-	:straight t
-	:hook
-	(julia-mode-hook . eglot-ensure)
-	;; ((c-mode-hook c++-mode-hook) . eglot-ensure)
-	)
+;; (leaf eglot
+;; 	:straight t
+;; 	:leaf-defer t
+;; 	:hook
+;; 	(julia-mode-hook . eglot-ensure)
+;; 	;; ((c-mode-hook c++-mode-hook) . eglot-ensure)
+;; 	)
 
-(leaf eglot-jl
-	:straight t
-	:init (eglot-jl-init))
+;; (leaf eglot-jl
+;; 	:straight t
+;; 	:init (eglot-jl-init))
 
 (leaf openfoam
 	:straight (openfoam
@@ -534,7 +535,9 @@
 				 ("C-n" . company-select-next)
 				 ("C-p" . company-select-previous)
 				 ("M-<" . company-select-first)
-				 ("M->" . company-select-last)))
+				 ("M->" . company-select-last))
+	:hook
+	(c++-mode-hook . (lambda () (when (file-remote-p default-directory) (company-mode -1)))))
 
 (leaf yasnippet
   :straight t

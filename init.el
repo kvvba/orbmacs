@@ -65,7 +65,7 @@
   :blackout abbrev-mode
   :init
 	(setq inhibit-startup-screen t)
-	(find-file "~/Documents/org/gtd/corkboard.org")
+	;; (find-file "~/Documents/org/gtd/corkboard.org")
 	;; (list-bookmarks)
 	;; (switch-to-buffer "*Bookmark List*")
 	
@@ -578,7 +578,7 @@
   ;; (find-file-hook . denote-link-buttonize-buffer)
 	(org-mode-hook . denote-rename-buffer-mode)
   :bind
-  ("C-c n i" . denote-link)
+  ("C-c n i" . denote-link-or-create)
   ("C-c n I" . denote-link-add-links)
   ("C-c n j" . my-denote-journal)
   ("C-c n b" . denote-link-backlinks)
@@ -759,16 +759,16 @@
 ;;   :blackout t
 ;;   :init (global-flycheck-mode))
 
-;; (leaf dashboard
-;; 	:straight t
-;; 	:config
-;; 	(dashboard-setup-startup-hook)
-;; 	(setq dashboard-startup-banner "~/.emacs.d/media/sicp.png")
-;; 	(setq dashboard-center-content t)
-;; 	(setq dashboard-banner-logo-title "Welcome to Orbmacs")
-;; 	(setq dashboard-items '((recents  . 5)
-;; 													(bookmarks . 15)))
-;; 	(setq dashboard-set-footer nil))
+(leaf dashboard
+	:straight t
+	:config
+	(dashboard-setup-startup-hook)
+	(setq dashboard-startup-banner "~/.emacs.d/media/sicp.png")
+	(setq dashboard-center-content t)
+	(setq dashboard-banner-logo-title "Welcome to Orbmacs")
+	(setq dashboard-items '((recents  . 5)
+													(bookmarks . 15)))
+	(setq dashboard-set-footer nil))
 
 (leaf markdown-mode
 	:straight t)
@@ -799,3 +799,16 @@
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files
+	 '("/Users/jakub/Documents/org/gtd/agenda.org" "/Users/jakub/Documents/org/gtd/completed-projects.org" "/Users/jakub/Documents/org/gtd/corkboard.org" "/Users/jakub/Documents/org/gtd/inbox.org" "/Users/jakub/Documents/org/gtd/notes.org" "/Users/jakub/Documents/org/gtd/projects.org" "/Users/jakub/Documents/org/gtd/reminders.org")))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

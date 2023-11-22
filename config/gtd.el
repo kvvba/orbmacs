@@ -1,9 +1,11 @@
 (require 'org)
 
+(setq org-agenda-inhibit-startup t)
+
 ;; Files
 (setq org-directory "~/Documents/org")
 (setq org-agenda-files 
-      (mapcar 'file-truename 
+      (append 
 	      (file-expand-wildcards "~/Documents/org/gtd/*.org")))
 
 ;; Capture
@@ -33,9 +35,6 @@
 ;; Refile
 (setq org-refile-use-outline-path 'file)
 (setq org-outline-path-complete-in-steps nil)
-(setq org-refile-targets
-      '(("corkboard.org" :maxlevel . 1)
-				("agenda.org" :maxlevel . 1)))
 
 ;; (setq org-agenda-hide-tags-regexp ".")
 
@@ -87,6 +86,9 @@ See also `org-save-all-org-buffers'"
           (tags-todo "inbox"
                      ((org-agenda-prefix-format "  %?-12t% s")
                       (org-agenda-overriding-header "\nInbox\n")))
+					(tags-todo "project"
+										 ((org-agenda-prefix-format "  %?-12t% s")
+                      (org-agenda-overriding-header "\Projects\n")))
           (tags "CLOSED>=\"<today>\""
                 ((org-agenda-overriding-header "\nCompleted today\n")))))))
 
@@ -98,8 +100,11 @@ See also `org-save-all-org-buffers'"
 
 (define-key global-map (kbd "C-c r") 'org-refile)
 (setq org-refile-targets
-      '(("corkboard.org" :maxlevel . 1)
-				("agenda.org" :maxlevel . 1)))
+      '(("~/Documents/org/gtd/corkboard.org" :maxlevel . 1)
+				("~/Documents/org/gtd/agenda.org" :maxlevel . 1)
+				("~/Documents/org/gtd/inbox.org" :maxlevel . 1)
+				("~/Documents/org/gtd/completed-projects.org" :maxlevel . 1)
+				("~/Documents/org/gtd/projects.org" :maxlevel . 2)))
 
 ;; mu4e
 ;; (defun org-capture-mail ()

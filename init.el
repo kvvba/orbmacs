@@ -38,12 +38,15 @@
 	;; (straight-use-package 'hydra)
   (leaf-keywords-init))
 
+(setq user-full-name "jakub")
+
 (leaf org
 	:straight t
 	:blackout visual-line-mode
   :config
 	(load-file "~/.emacs.d/config/org-config.el")
 	(load-file "~/.emacs.d/config/gtd.el")
+	(load-file "~/.emacs.d/config/website-config.el")
   :bind
   ("C-c b" . org-cite-insert)
 	("C-M-<return>" . org-insert-subheading)
@@ -250,7 +253,7 @@
 	(load-file "~/.emacs.d/config/dired-config.el")
   :bind
   (dired-mode-map
-   ("K" . dired-kill-subdir)
+   ("K" . dired-do-kill-lines)
 	 ("C-x C-j" . dired-jump)
 	 ("W" . wdired-change-to-wdired-mode)
 	 ("r" . rgrep)
@@ -622,6 +625,8 @@
 
 (leaf consult
   :straight t
+	:config
+	(setq consult-preview-key "M-.")
   :bind
   ("C-s" . consult-line)
   ("C-x r b" . consult-bookmark)
@@ -793,22 +798,9 @@
 (leaf auto-dark
 	:straight t
 	:init
-	(setq auto-dark-light-theme 'modus-operandi)
-	(setq auto-dark-dark-theme 'modus-vivendi)
+	(setq auto-dark-light-theme 'ef-frost)
+	(setq auto-dark-dark-theme 'ef-winter)
 	(auto-dark-mode 1))
 
 (provide 'init)
 ;;; init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files
-	 '("/Users/jakub/Documents/org/gtd/agenda.org" "/Users/jakub/Documents/org/gtd/completed-projects.org" "/Users/jakub/Documents/org/gtd/corkboard.org" "/Users/jakub/Documents/org/gtd/inbox.org" "/Users/jakub/Documents/org/gtd/notes.org" "/Users/jakub/Documents/org/gtd/projects.org" "/Users/jakub/Documents/org/gtd/reminders.org")))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

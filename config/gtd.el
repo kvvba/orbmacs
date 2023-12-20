@@ -6,7 +6,11 @@
 (setq org-directory "~/Documents/org")
 (setq org-agenda-files 
       (append 
-	      (file-expand-wildcards "~/Documents/org/gtd/*.org")))
+	      (file-expand-wildcards "~/Documents/org/gtd/inbox.org")
+				(file-expand-wildcards "~/Documents/org/gtd/agenda.org")
+				(file-expand-wildcards "~/Documents/org/gtd/corkboard.org")
+				(file-expand-wildcards "~/Documents/org/gtd/projects.org")
+				(file-expand-wildcards "~/Documents/org/gtd/reminders.org")))
 
 ;; Capture
 
@@ -103,7 +107,7 @@ See also `org-save-all-org-buffers'"
       '(("~/Documents/org/gtd/corkboard.org" :maxlevel . 1)
 				("~/Documents/org/gtd/agenda.org" :maxlevel . 1)
 				("~/Documents/org/gtd/inbox.org" :maxlevel . 1)
-				("~/Documents/org/gtd/completed-projects.org" :maxlevel . 1)
+				("~/Documents/org/gtd/done.org" :maxlevel . 1)
 				("~/Documents/org/gtd/projects.org" :maxlevel . 2)))
 
 ;; mu4e

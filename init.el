@@ -156,7 +156,7 @@
 
   (set-face-attribute 'default nil
 											:family "Source Code Pro"
-											;; :height 100
+											:height 100
 											:weight 'normal
 											:width 'normal
 											)
@@ -733,6 +733,9 @@
   (prog-mode-hook . rainbow-delimiters-mode))
 
 (leaf ef-themes
+	:straight t)
+
+(leaf doom-themes
 	:straight t)
 
 ;; (leaf lambda-themes

@@ -156,7 +156,7 @@
 
   (set-face-attribute 'default nil
 											:family "Source Code Pro"
-											:height 100
+											;; :height 100
 											:weight 'normal
 											:width 'normal
 											)
@@ -801,8 +801,8 @@
 (leaf auto-dark
 	:straight t
 	:init
-	(setq auto-dark-light-theme 'ef-frost)
-	(setq auto-dark-dark-theme 'ef-winter)
+	(setq auto-dark-light-theme 'doom-one-light)
+	(setq auto-dark-dark-theme 'doom-one)
 	(auto-dark-mode 1))
 
 (provide 'init)

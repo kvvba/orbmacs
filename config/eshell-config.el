@@ -1,3 +1,4 @@
+(require 'eshell)
 (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
 
 (setq eshell-prompt-function

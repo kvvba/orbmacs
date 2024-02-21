@@ -1,3 +1,4 @@
+(require 'org)
 ;; (setq sentence-end-double-space nil)
 
 ;; (setq org-hide-leading-stars t)

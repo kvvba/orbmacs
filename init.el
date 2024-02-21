@@ -43,7 +43,7 @@
 (leaf org
 	:straight t
 	:blackout visual-line-mode
-  :config
+  :init
 	(load-file "~/.emacs.d/config/org-config.el")
 	(load-file "~/.emacs.d/config/gtd.el")
 	(load-file "~/.emacs.d/config/website-config.el")
@@ -737,6 +737,10 @@
 
 (leaf doom-themes
 	:straight t)
+
+;; (leaf doom-modeline
+;; 	:straight t
+;; 	:init (doom-modeline-mode 1))
 
 ;; (leaf lambda-themes
 ;;   :straight (lambda-themes :type git :host github :repo "lambda-emacs/lambda-themes") 

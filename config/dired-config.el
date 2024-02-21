@@ -1,3 +1,4 @@
+(require 'dired)
 (defun kill-dired-buffers ()
 	(interactive)
 	(mapc (lambda (buffer)

@@ -1,3 +1,4 @@
+(require 'erc)
 (setq erc-server "irc.libera.chat"
 			erc-nick "jakvb"
 			erc-kill-buffer-on-part t

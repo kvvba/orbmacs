@@ -1,3 +1,4 @@
+(require 'bongo)
 (setq bongo-default-directory "~/Music")
 (setq bongo-prefer-library-buffers nil)
 (setq bongo-insert-whole-directory-trees t)

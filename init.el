@@ -69,13 +69,13 @@
   :init
 	(setq inhibit-startup-screen t)
 	;; (find-file "~/Documents/org/gtd/corkboard.org")
-	;; (list-bookmarks)
-	;; (switch-to-buffer "*Bookmark List*")
-	
+	(list-bookmarks)
+	(switch-to-buffer "*Bookmark List*")
+		
   ;; Make emacs start faster
-  (setq startup/gc-cons-threshold gc-cons-threshold)
-  (setq gc-cons-threshold most-positive-fixnum)
-  (defun startup/reset-gc () (setq gc-cons-threshold startup/gc-cons-threshold))
+  ;; (setq startup/gc-cons-threshold gc-cons-threshold)
+  ;; (setq gc-cons-threshold most-positive-fixnum)
+  ;; (defun startup/reset-gc () (setq gc-cons-threshold startup/gc-cons-threshold))
 
 	;; (remove-hook 'find-file-hook 'vc-refresh-state)
 	
@@ -771,16 +771,16 @@
 ;;   :blackout t
 ;;   :init (global-flycheck-mode))
 
-(leaf dashboard
-	:straight t
-	:config
-	(dashboard-setup-startup-hook)
-	(setq dashboard-startup-banner "~/.emacs.d/media/sicp.png")
-	(setq dashboard-center-content t)
-	(setq dashboard-banner-logo-title "Welcome to Orbmacs")
-	(setq dashboard-items '((recents  . 5)
-													(bookmarks . 15)))
-	(setq dashboard-set-footer nil))
+;; (leaf dashboard
+;; 	:straight t
+;; 	:config
+;; 	(dashboard-setup-startup-hook)
+;; 	(setq dashboard-startup-banner "~/.emacs.d/media/sicp.png")
+;; 	(setq dashboard-center-content t)
+;; 	(setq dashboard-banner-logo-title "Welcome to Orbmacs")
+;; 	(setq dashboard-items '((recents  . 5)
+;; 													(bookmarks . 15)))
+;; 	(setq dashboard-set-footer nil))
 
 (leaf markdown-mode
 	:straight t)

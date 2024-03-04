@@ -337,35 +337,35 @@
   :init
   (global-page-break-lines-mode))
 
-(leaf citar
-  :straight t
-  :after org
-  :custom
-  (org-cite-global-bibliography . '("~/Documents/org/papers/references.bib"
-																		"~/Documents/references.bib"))
-  (org-cite-insert-processor . 'citar)
-  (org-cite-follow-processor . 'citar)
-  (org-cite-activate-processor . 'citar)
-  (citar-bibliography . org-cite-global-bibliography)
-  :config
-  (advice-add #'multi-occur :override #'consult-multi-occur)
-  (setq citar-at-point-function 'embark-act)
-	:bind
-	("C-c n o" . citar-open))
+;; (leaf citar
+;;   :straight t
+;;   :after org
+;;   :custom
+;;   (org-cite-global-bibliography . '("~/Documents/org/papers/references.bib"
+;; 																		"~/Documents/references.bib"))
+;;   (org-cite-insert-processor . 'citar)
+;;   (org-cite-follow-processor . 'citar)
+;;   (org-cite-activate-processor . 'citar)
+;;   (citar-bibliography . org-cite-global-bibliography)
+;;   :config
+;;   (advice-add #'multi-occur :override #'consult-multi-occur)
+;;   (setq citar-at-point-function 'embark-act)
+;; 	:bind
+;; 	("C-c n o" . citar-open))
 
-(leaf citar-denote
-	:straight (citar-denote
-						 :type git
-						 :host github
-						 :repo "pprevos/citar-denote")
-	:blackout citar-denote
-	:init
-	(citar-denote-mode 1)
-	:bind
-	("C-c n c n" . citar-create-note)
-	("C-c n c o" . citar-open-notes)
-	("C-c n c d" . citar-dwim)
-	("C-c n c a" . citar-denote-add-citekey))
+;; (leaf citar-denote
+;; 	:straight (citar-denote
+;; 						 :type git
+;; 						 :host github
+;; 						 :repo "pprevos/citar-denote")
+;; 	:blackout citar-denote
+;; 	:init
+;; 	(citar-denote-mode 1)
+;; 	:bind
+;; 	("C-c n c n" . citar-create-note)
+;; 	("C-c n c o" . citar-open-notes)
+;; 	("C-c n c d" . citar-dwim)
+;; 	("C-c n c a" . citar-denote-add-citekey))
 
 ;; (leaf mu4e
 ;;   :leaf-defer t
@@ -518,7 +518,10 @@
 	)
 
 (leaf gmsh-mode
-	:straight t)
+	:straight (gmsh-mode
+						 :type git
+						 :host gitlab
+						 :repo "kvvba/gmsh-mode"))
 
 (leaf company
   :straight t

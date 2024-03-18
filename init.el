@@ -62,6 +62,12 @@
   ;; (org-after-todo-statistics-hook . org-summary-todo)
 	)
 
+(leaf org-agenda
+	:bind
+	(org-agenda-mode-map
+	 ("r" . org-agenda-refile)
+	 ("g" . org-agenda-redo)))
+
 (leaf emacs
   :blackout auto-revert-mode
   :blackout (emacs-lisp-mode . "λ")
@@ -72,11 +78,6 @@
 	(list-bookmarks)
 	(switch-to-buffer "*Bookmark List*")
 		
-  ;; Make emacs start faster
-  ;; (setq startup/gc-cons-threshold gc-cons-threshold)
-  ;; (setq gc-cons-threshold most-positive-fixnum)
-  ;; (defun startup/reset-gc () (setq gc-cons-threshold startup/gc-cons-threshold))
-
 	;; (remove-hook 'find-file-hook 'vc-refresh-state)
 	
   (defvar startup/file-name-handler-alist file-name-handler-alist)
@@ -103,9 +104,6 @@
   ;; Enable conservative scrolling
   (setq scroll-conservatively 100)
 
-  ;; Diable ring-bell
-  ;; (setq ring-bell-function 'ignore)
-
   ;; Indentation
   (setq-default tab-width 2)
   (setq-default standard-indent 2)
@@ -114,8 +112,6 @@
   (setq-default indent-tabs-mode t)
   (setq backward-delete-char-untabify-method 'nil)
 
-  ;; Enable prettify symbols
-  ;; (global-prettify-symbols-mode t)
 
   ;; Enable bracket pair-matching
   (setq electric-pair-pairs '(
@@ -261,10 +257,6 @@
 	:hook
 	(dired-mode-hook . dired-hide-details-mode))
 
-;; (leaf dired-hacks-utils
-;; 	:straight t
-;; 	:after dired)
-
 (leaf all-the-icons
 	:straight t)
 
@@ -296,14 +288,6 @@
 		'("S" . avy-kill-region)
 		'("V" . avy-kill-ring-save-region)))
 
-;; (leaf org-moden-indent
-;; 	:straight (org-modern-indent
-;; 						 :type git
-;; 						 :host github
-;; 						 :repo "jdtsmith/org-modern-indent")
-;; 	:hook
-;; 	(org-indent-mode-hook . org-modern-indent-mode))
-
 (leaf nov
 	:straight t
 	:config
@@ -318,13 +302,6 @@
 (leaf auctex
   :straight t)
 
-;; (leaf org-pandoc-import
-;;   :straight (org-pandoc-import
-;; 						 :type git
-;; 						 :host github
-;; 						 :repo "tecosaur/org-pandoc-import"
-;; 						 :files ("*.el" "filters" "preprocessors")))
-
 (leaf ox-pandoc
 	:straight t)
 
@@ -336,122 +313,6 @@
   :blackout t
   :init
   (global-page-break-lines-mode))
-
-;; (leaf citar
-;;   :straight t
-;;   :after org
-;;   :custom
-;;   (org-cite-global-bibliography . '("~/Documents/org/papers/references.bib"
-;; 																		"~/Documents/references.bib"))
-;;   (org-cite-insert-processor . 'citar)
-;;   (org-cite-follow-processor . 'citar)
-;;   (org-cite-activate-processor . 'citar)
-;;   (citar-bibliography . org-cite-global-bibliography)
-;;   :config
-;;   (advice-add #'multi-occur :override #'consult-multi-occur)
-;;   (setq citar-at-point-function 'embark-act)
-;; 	:bind
-;; 	("C-c n o" . citar-open))
-
-;; (leaf citar-denote
-;; 	:straight (citar-denote
-;; 						 :type git
-;; 						 :host github
-;; 						 :repo "pprevos/citar-denote")
-;; 	:blackout citar-denote
-;; 	:init
-;; 	(citar-denote-mode 1)
-;; 	:bind
-;; 	("C-c n c n" . citar-create-note)
-;; 	("C-c n c o" . citar-open-notes)
-;; 	("C-c n c d" . citar-dwim)
-;; 	("C-c n c a" . citar-denote-add-citekey))
-
-;; (leaf mu4e
-;;   :leaf-defer t
-;;   :bind
-;;   ("C-c z" . mu4e)
-;;   ("C-c Z" . mu4e-other-window)
-;;   (mu4e-main-mode-map
-;;    ("e" . kill-current-buffer))
-;;   (mu4e-headers-mode-map
-;;    ("C-c c" . org-capture-mail))
-;;   (mu4e-view-mode-map
-;;    ("C-c c" . org-capture-mail))
-;;   :defer-config
-;;   (load "~/.emacs.d/config/mail-config.el"))
-
-;; (leaf mu4e-alert
-;;   :straight t
-;;   :after mu4e
-;;   :config
-;;   (mu4e-alert-set-default-style 'libnotify)
-;;   (mu4e-alert-enable-mode-line-display)
-;;   (mu4e-alert-enable-notifications))
-
-;; (leaf elfeed
-;; 	:straight t
-;; 	:init
-;; 	(defun elfeed-other-frame ()
-;; 		"Opens elfeed in a new frame."
-;; 		(interactive)
-;; 		(switch-to-buffer-other-frame "*elfeed-search*")
-;; 		(elfeed))
-;; 	:config
-;; 	(setq elfeed-feeds
-;; 				'(("https://rss.sciencedirect.com/publication/science/03019322" work fluids)
-;; 					;; ("https://rss.sciencedirect.com/publication/science/13594311" work fluids)
-;; 					("https://rss.sciencedirect.com/publication/science/0142727X" work fluids)
-;; 					("https://rss.sciencedirect.com/publication/science/00457930" work fluids)
-;; 					("https://www.mdpi.com/rss/journal/fluids" work fluids)
-;; 					("https://www.cambridge.org/core/rss/product/id/1F51BCFAA50101CAF5CB9A20F8DEA3E4" work fluids)
-;; 					("https://www.annualreviews.org/r/fluid_rss" work fluids)
-;; 					("https://onlinelibrary.wiley.com/journal/10970363#" work fluids)
-;; 					("https://juliacomputing.com/feed.xml" work prog)
-;; 					("https://masteringemacs.org/feed" emacs)
-;; 					("https://protesilaos.com/master.xml" prot)
-;; 					("http://feeds.arstechnica.com/arstechnica/index" news tech)
-;; 					("https://www.sciencedaily.com/rss/top/technology.xml" news tech)
-;; 					("https://planet.emacslife.com/zh/atom.xml" emacs)))
-;; 	:bind
-;; 	;; ("C-c w" . elfeed)
-;; 	;; ("C-c W" . elfeed-other-frame)
-;; 	(elfeed-search-mode-map
-;; 	 ("U" . elfeed-update))
-;; 	:hook
-;; 	(elfeed-show-mode-hook . visual-line-mode))
-
-;; (leaf bongo
-;;   :straight t
-;;   :leaf-defer t
-;;   :defer-config (load-file "~/.emacs.d/config/bongo-config.el")
-;;   :bind
-;;   (("<C-XF86AudioPlay>" . bongo-pause/resume)
-;;    ("<C-XF86AudioNext>" . bongo-next)
-;;    ("<C-XF86AudioPrev>" . bongo-previous)
-;;    ("<M-XF86AudioPlay>" . bongo-show)
-;;    ("<S-XF86AudioNext>" . bongo-seek-forward-10)
-;;    ("<S-XF86AudioPrev>" . bongo-seek-backward-10)
-;;    ("C-c p"             . bongo)
-;;    (bongo-playlist-mode-map
-;; 		("n" . bongo-next-object)
-;; 		("p" . bongo-previous-object)
-;; 		("M-n" . prot/bongo-paylist-section-next)
-;; 		("M-p" . prot/bongo-paylist-section-previous)
-;; 		("M-h" . prot/bongo-playlist-mark-section)
-;; 		("M-d" . prot/bongo-playlist-kill-section)
-;; 		("g" . prot/bongo-playlist-reset)
-;; 		("D" . prot/bongo-playlist-terminate)
-;; 		("r" . prot/bongo-playlist-random-toggle)
-;; 		("R" . bongo-rename-line)
-;; 		("d" . bongo-dired-line)       ; Jump to dir of file at point
-;; 		("J" . dired-jump)             ; Jump to library buffer
-;; 		("i" . prot/bongo-playlist-insert-playlist-file)
-;; 		("I" . bongo-insert-special))
-;;    (bongo-dired-library-mode-map
-;; 		("<C-return>" . prot/bongo-dired-insert)
-;; 		("C-c SPC" . prot/bongo-dired-insert)
-;; 		("C-c +" . prot/bongo-dired-make-playlist-file))))
 
 (leaf eat
 	:straight (eat
@@ -480,33 +341,8 @@
 (leaf julia-mode
 	:straight t)
 
-;; (leaf tree-sitter
-;; 	:straight t
-;; 	:init (global-tree-sitter-mode))
-
-;; (leaf tree-sitter-langs
-;; 	:straight t)
-
 (leaf julia-repl
 	:straight t)
-
-;; (leaf leaf
-;; 	:straight (org-jl
-;; 						 :type git
-;; 						 :host github
-;; 						 :repo "tecosaur/Org.jl"))
-
-;; (leaf eglot
-;; 	:straight t
-;; 	:leaf-defer t
-;; 	:hook
-;; 	(julia-mode-hook . eglot-ensure)
-;; 	;; ((c-mode-hook c++-mode-hook) . eglot-ensure)
-;; 	)
-
-;; (leaf eglot-jl
-;; 	:straight t
-;; 	:init (eglot-jl-init))
 
 (leaf openfoam
 	:straight (openfoam
@@ -592,12 +428,6 @@
 	("C-c n n" . denote)
 	("C-c n d" . (lambda () (interactive) (dired denote-directory))))
 
-;; (leaf denote-menu
-;; 	:straight (denote-menu
-;; 						 :type git
-;; 						 :host github
-;; 						 :repo "namilus/denote-menu"))
-
 (leaf consult-notes
   :straight (consult-notes
 						 :type git
@@ -612,14 +442,6 @@
   :bind
   ("C-c n r" . jakub/consult-notes-ripgrep)
   ("C-c n f" . consult-notes))
-
-;; (leaf easy-jekyll
-;; 	:straight t
-;; 	:defer-config
-;; 	(setq easy-jekyll-basedir "~/Documents/org/blog/")
-;; 	(setq easy-jekyll-url "https://kvvba.github.io/")
-;; 	:bind
-;; 	("C-c j" . easy-jekyll))
 
 (leaf vertico
   :straight t
@@ -709,17 +531,6 @@
 	:bind
 	("C-x o" . switch-window))
 
-;; (leaf async
-;;   :straight t
-;;   :init
-;;   (dired-async-mode 1))
-
-;; (leaf undo-tree
-;; 	:straight t
-;;   :blackout undo-tree-mode
-;; 	:config
-;; 	(global-undo-tree-mode t))
-
 (leaf magit
   :straight t
   :leaf-defer)
@@ -741,21 +552,6 @@
 (leaf doom-themes
 	:straight t)
 
-;; (leaf doom-modeline
-;; 	:straight t
-;; 	:init (doom-modeline-mode 1))
-
-;; (leaf lambda-themes
-;;   :straight (lambda-themes :type git :host github :repo "lambda-emacs/lambda-themes") 
-;;   :custom
-;;   (lambda-themes-set-italic-comments . t)
-;;   (lambda-themes-set-italic-keywords . t)
-;;   (lambda-themes-set-variable-pitch . nil) 
-;;   :config
-  ;; load preferred theme 
-  ;; (load-theme 'lambda-light)
-	;; )
-
 (leaf standard-themes
 	:straight t
 	:config
@@ -769,27 +565,8 @@
 (leaf fireplace
 	:straight t)
 
-;; (leaf flycheck
-;;   :straight t
-;;   :blackout t
-;;   :init (global-flycheck-mode))
-
-;; (leaf dashboard
-;; 	:straight t
-;; 	:config
-;; 	(dashboard-setup-startup-hook)
-;; 	(setq dashboard-startup-banner "~/.emacs.d/media/sicp.png")
-;; 	(setq dashboard-center-content t)
-;; 	(setq dashboard-banner-logo-title "Welcome to Orbmacs")
-;; 	(setq dashboard-items '((recents  . 5)
-;; 													(bookmarks . 15)))
-;; 	(setq dashboard-set-footer nil))
-
 (leaf markdown-mode
 	:straight t)
-
-;; (leaf olivetti
-;; 	:straight t)
 
 (leaf Emacs-wgrep
 	:straight (Emacs-wgrep
@@ -808,8 +585,8 @@
 (leaf auto-dark
 	:straight t
 	:init
-	(setq auto-dark-light-theme 'doom-one-light)
-	(setq auto-dark-dark-theme 'doom-one)
+	(setq auto-dark-light-theme 'doom-solarized-light)
+	(setq auto-dark-dark-theme 'doom-solarized-dark)
 	(auto-dark-mode 1))
 
 (provide 'init)

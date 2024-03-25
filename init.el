@@ -549,13 +549,13 @@
 (leaf ef-themes
 	:straight t)
 
-(leaf doom-themes
-	:straight t)
+;; (leaf doom-themes
+;; 	:straight t)
 
-(leaf standard-themes
-	:straight t
-	:config
-	(setq standard-themes-italic-constructs t))
+;; (leaf standard-themes
+;; 	:straight t
+;; 	:config
+;; 	(setq standard-themes-italic-constructs t))
 
 (leaf nix-mode
 	:straight t
@@ -585,9 +585,22 @@
 (leaf auto-dark
 	:straight t
 	:init
-	(setq auto-dark-light-theme 'doom-solarized-light)
-	(setq auto-dark-dark-theme 'doom-solarized-dark)
+	(setq auto-dark-light-theme 'modus-operandi)
+	(setq auto-dark-dark-theme 'modus-vivendi)
 	(auto-dark-mode 1))
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files
+	 '("/Users/jakub/Documents/org/gtd/inbox.org" "/Users/jakub/Documents/org/gtd/agenda.org" "/Users/jakub/Documents/org/gtd/corkboard.org" "/Users/jakub/Documents/org/gtd/projects.org")))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

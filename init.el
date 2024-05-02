@@ -425,7 +425,8 @@
   ("C-c n j" . my-denote-journal)
   ("C-c n b" . denote-link-backlinks)
 	("C-c n m" . denote-meeting-minutes)
-	("C-c n n" . denote)
+	("C-c n N" . denote)
+	("C-c n n" . denote-open-or-create)
 	("C-c n d" . (lambda () (interactive) (dired denote-directory))))
 
 (leaf consult-notes

@@ -23,5 +23,7 @@
 ;; 	(let ((delete-by-moving-to-trash nil))
 ;; 		(dired-do-delete)))
 
+(setq dired-listing-switches "-alFh")
+
 (provide 'dired-config.el)
 ;;; dired-config.el ends here
